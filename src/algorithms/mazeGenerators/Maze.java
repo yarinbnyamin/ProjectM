@@ -18,29 +18,30 @@ public class Maze {
     public void print(){
         boolean found_start= false;
         boolean found_goal= false;
+        StringBuilder b = new StringBuilder();
         for (int i = 0; i < rows; i++) {
+            b.append("{ ");
             for (int j = 0; j < columns; j++) {
                 if (!found_start){
                     if(start_position.getRowIndex() == i && start_position.getColumnIndex() == j) {
-                        System.out.print("S");
+                        b.append("S ");
                         found_start = true;
                         continue;
                     }
                 }
                 else if(!found_goal){
                     if(end_position.getRowIndex() == i && end_position.getColumnIndex() == j) {
-                        System.out.print("E");
+                        b.append("E ");
                         found_goal = true;
                         continue;
                     }
                 }
+                b.append(maze[i][j]+" ");
 
-                System.out.print(maze[i][j]);
-
-                }
-                System.out.println();
             }
-
+            b.append("}\n");
+        }
+        System.out.println(b);
 
     }
 
