@@ -41,6 +41,7 @@ public class Maze {
             }
             b.append("}\n");
         }
+        b.delete(b.length()-1,b.length());
         System.out.println(b);
 
     }

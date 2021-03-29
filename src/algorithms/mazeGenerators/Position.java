@@ -11,7 +11,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "{" + row + "," + column + '}';
+        return "{" + column + "," + row + '}';
     }
 
     public int getRowIndex() {
@@ -29,4 +29,5 @@ public class Position {
     public void setColumn(int column) {
         this.column = column;
     }
+
 }
