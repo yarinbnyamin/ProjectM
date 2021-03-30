@@ -5,12 +5,11 @@ import java.util.Random;
 import java.util.Stack;
 
 public class MyMazeGenerator extends AMazeGenerator{
-    private Stack<Position> s = new Stack<>();
-    private Stack<Position> path = new Stack<>();
+    private Stack<Position> s = new Stack<>(); // the path we pass
     private Random rand = new Random();
     private int rows;
     private int columns;
-    private boolean ended;
+    private boolean ended; // we ended to generate
 
     @Override
     public Maze generate(int rows, int columns) {
@@ -18,35 +17,37 @@ public class MyMazeGenerator extends AMazeGenerator{
         this.columns = columns;
         int r;
         int c;
-        int count = 0;
+        int count = 0; // how fill the maze is
         Maze M;
         do{
             M = new Maze(rows,columns);
             int[][] m = M.getMaze();
-            allWallsGenerateor(M);
+            allWallsGenerateor(M); // start with all one's
             s.push(new Position(0,0));
-            Position curr = s.peek();
+            Position curr = s.peek(); // start from the starting position
             ArrayList<Position> neighbors;
             do {
                 r = curr.getRowIndex();
                 c = curr.getColumnIndex();
                 m[r][c] = 1;
+                // check all the available path we can take
                 neighbors = findNeighbors(curr,M);
                 m[r][c] = 0;
+                // chose only one path
                 randomlyAddCellToStack(neighbors);
                 count++;
                 curr = s.pop();
             } while (!s.empty() && !(endPoint(r, c, M)));
             s.clear();
-            if(count < r*c*0.35)
+            if(count < r*c*0.35) // if the maze not full enough
                 ended = false;
-        }while(!ended);
+        }while(!ended); // we we ended the generate but we didn't got to the end
 
         return M;
 
     }
 
-    private void allWallsGenerateor(Maze M){
+    private void allWallsGenerateor(Maze M){ // fill the maze with one's
 
         for (int i = 0; i < M.getRows(); i++)
             for (int j = 0; j < M.getColumns(); j++)
@@ -55,7 +56,8 @@ public class MyMazeGenerator extends AMazeGenerator{
     }
 
     private ArrayList<Position> findNeighbors(Position pos,Maze M) {
-        ArrayList<Position> neighbors = new ArrayList<Position>();
+        // return a list with all the possible paths
+        ArrayList<Position> neighbors = new ArrayList<>();
 
         int c = pos.getColumnIndex();
         int r = pos.getRowIndex();
@@ -80,12 +82,12 @@ public class MyMazeGenerator extends AMazeGenerator{
     }
 
     private Boolean validPos(int r, int c){
-        if(c >= 0 && c < columns && r >= 0 && r < rows)
-            return true;
-        return false;
+        // if the point is in the maze
+        return c >= 0 && c < columns && r >= 0 && r < rows;
     }
 
     private Boolean validMov(int r, int c, Maze M){
+        // if the position neighbors is not 0
         int[][] m = M.getMaze();
         boolean flag;
 
@@ -103,6 +105,7 @@ public class MyMazeGenerator extends AMazeGenerator{
     }
 
     private boolean endPoint(int r, int c,Maze M){
+        // if we got to the end point or one step near it
         Position endPos = M.getGoalPosition();
         int rE = endPos.getRowIndex();
         int cE = endPos.getColumnIndex();
@@ -121,6 +124,7 @@ public class MyMazeGenerator extends AMazeGenerator{
     }
 
     private void randomlyAddCellToStack(ArrayList<Position> cells) {
+        // chose random paths from list of paths
         if(cells.isEmpty())
             return;
 
