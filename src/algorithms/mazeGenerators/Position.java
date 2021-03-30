@@ -11,7 +11,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "{" + column + "," + row + '}';
+        return "{" + row + "," + column + '}';
     }
 
     public int getRowIndex() {
