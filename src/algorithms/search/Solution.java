@@ -16,11 +16,11 @@ public class Solution {
     public void setSolPath(ArrayList solPath) {
         this.solPath = solPath;
     }
-    /*
+
     public void addState(AState state){
         solPath.add(state);
     }
-     */
+
     public boolean isSolvable(){
         return solPath.size()>0;
     }
