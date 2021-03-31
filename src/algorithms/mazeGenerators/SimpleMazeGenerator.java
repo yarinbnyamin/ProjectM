@@ -7,7 +7,7 @@ public class SimpleMazeGenerator extends AMazeGenerator{
     private Random rand = new Random();
     @Override
     public Maze generate(int rows, int columns) {
-        Maze Sm = new Maze(columns,rows);
+        Maze Sm = new Maze(rows,columns);
         onePathGenerateor(Sm);
         randomlyAddZeros(Sm);
         return Sm;
@@ -15,7 +15,7 @@ public class SimpleMazeGenerator extends AMazeGenerator{
     }
 
     private void onePathGenerateor(Maze Sm){
-        for (int i = 0; i < Sm.getColumns(); i++)
+        for (int i = 0; i < Sm.getRows(); i++)
             Sm.getMaze()[i][0] = 0;
 
         for (int i = 1; i < Sm.getRows(); i++) {
