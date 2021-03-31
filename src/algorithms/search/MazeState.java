@@ -10,5 +10,9 @@ public class MazeState extends AState{
         state = pos.toString();
     }
 
+    @Override
+    public String toString() {
+        return "[" + state + ", " + cameFrom + ", " + cost + "]";
+    }
 
 }
