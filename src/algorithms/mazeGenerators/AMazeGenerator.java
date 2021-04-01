@@ -15,4 +15,12 @@ public abstract class AMazeGenerator implements IMazeGenerator{
         end_time = System.nanoTime();
         return TimeUnit.NANOSECONDS.toMillis(end_time-start_time);
     }
+
+    protected void allNumGenerateor(Maze M, int num){ // fill the maze with the num
+
+        for (int i = 0; i < M.getRows(); i++)
+            for (int j = 0; j < M.getColumns(); j++)
+                M.getMaze()[i][j] = num;
+
+    }
 }

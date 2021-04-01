@@ -17,11 +17,7 @@ public class SimpleMazeGenerator extends AMazeGenerator{
     private void onePathGenerateor(Maze Sm){
         int randNum;
 
-        for (int i = 0; i < Sm.getRows(); i++) {
-            for (int j = 0; j < Sm.getColumns(); j++) {
-                Sm.getMaze()[i][j] = 1;
-            }
-        }
+        allNumGenerateor(Sm, 1); // start with all one's
 
         int r=0;
         int c=0;

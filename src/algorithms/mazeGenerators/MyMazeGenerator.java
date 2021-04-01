@@ -22,7 +22,7 @@ public class MyMazeGenerator extends AMazeGenerator{
         do{
             M = new Maze(rows,columns);
             int[][] m = M.getMaze();
-            allWallsGenerateor(M); // start with all one's
+            allNumGenerateor(M, 1); // start with all one's
             s.push(new Position(0,0));
             Position curr = s.peek(); // start from the starting position
             ArrayList<Position> neighbors;
@@ -44,14 +44,6 @@ public class MyMazeGenerator extends AMazeGenerator{
         }while(!ended); // we we ended the generate but we didn't got to the end
 
         return M;
-
-    }
-
-    private void allWallsGenerateor(Maze M){ // fill the maze with one's
-
-        for (int i = 0; i < M.getRows(); i++)
-            for (int j = 0; j < M.getColumns(); j++)
-                M.getMaze()[i][j] = 1;
 
     }
 
