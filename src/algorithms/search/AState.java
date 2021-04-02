@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import javax.swing.plaf.nimbus.State;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class AState {

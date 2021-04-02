@@ -3,22 +3,22 @@ package algorithms.search;
 import java.util.ArrayList;
 
 public class Solution {
-    private ArrayList solPath;
+    private ArrayList<AState> solPath;
 
     public Solution() {
-        this.solPath = new ArrayList();
+        this.solPath = new ArrayList<>();
     }
 
-    public ArrayList getSolPath() {
+    public ArrayList<AState> getSolutionPath() {
         return solPath;
     }
 
-    public void setSolPath(ArrayList solPath) {
+    public void setSolPath(ArrayList<AState> solPath) {
         this.solPath = solPath;
     }
 
-    public void addState(AState state){
-        solPath.add(state);
+    public void addStateToTop(AState state){
+        solPath.add(0,state);
     }
 
     public boolean isSolvable(){

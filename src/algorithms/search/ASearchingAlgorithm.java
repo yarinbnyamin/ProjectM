@@ -7,7 +7,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
     protected int visitedNodes;
 
     public ASearchingAlgorithm() {
-        openList = new PriorityQueue<AState>();
+        openList = new PriorityQueue<>();
         visitedNodes = 0;
     }
 
@@ -15,6 +15,17 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
         visitedNodes++;
         return openList.poll();
     }
+
+    protected Solution backtrackSol(AState goalState){
+        Solution sol=new Solution();
+        AState preState =goalState;
+        while (preState != null) {
+            sol.addStateToTop(preState);
+            preState=preState.getCameFrom();
+        }
+        return sol;
+    }
+
 
     @Override
     public AState search(ISearchable s) {
