@@ -1,11 +1,12 @@
 package algorithms.search;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.Objects;
 
+enum State {white, grey, black, goal}
+
 public abstract class AState {
-    protected String state;
+    protected State state;
     protected double cost;
     protected AState cameFrom;
 
@@ -13,19 +14,15 @@ public abstract class AState {
         this.cameFrom = cameFrom;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AState aState = (AState) o;
-        return state != null ? Objects.equals(state, aState.state) : false;
+    public boolean equals(AState state) {
+        return this.state == state.getState();
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 

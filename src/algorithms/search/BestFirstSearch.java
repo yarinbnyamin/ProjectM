@@ -5,14 +5,19 @@ public class BestFirstSearch extends BreadthFirstSearch{
     public BestFirstSearch() {
 
     }
-
+    /*
     @Override
     public AState search(ISearchable s) {
         return super.search(s);
     }
+    */
+    @Override
+    public int getNumberOfNodesEvaluated() {
+        return visitedNodes;
+    }
 
     @Override
-    public int getNumberOfVisitedNodes() {
-        return visitedNodes;
+    public String getName() {
+        return super.getName();
     }
 }

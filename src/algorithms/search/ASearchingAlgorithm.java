@@ -28,12 +28,17 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
 
 
     @Override
-    public AState search(ISearchable s) {
+    public Solution solve(ISearchable s) {
         return null;
     }
 
     @Override
-    public int getNumberOfVisitedNodes() {
+    public int getNumberOfNodesEvaluated() {
         return 0;
     }
+
+    @Override
+    public String getName() {
+        return null;
+    } // add to others
 }

@@ -5,4 +5,9 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
     public Solution solve(ISearchable domain) {
         return null;
     }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
 }
