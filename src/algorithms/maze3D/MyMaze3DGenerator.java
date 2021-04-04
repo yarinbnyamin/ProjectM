@@ -28,7 +28,6 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
            m3d=new Maze3D(depths,rows,columns);
             int[][][] m = m3d.getMap();
             allNumGenerateor(m3d, 1);
-            m3d.print();
             s.push(new Position3D(0,0,0));
             Position3D curr = s.peek();
             ArrayList<Position3D> neighbors;
@@ -47,7 +46,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
             if(count < r*c*0.35) // if the maze not full enough
                 ended = false;
         }while(!ended);
-        m3d.getMap()[depth-1][rows-1][columns-1]=0;
+        m3d.getMap()[depths][rows-1][columns-1]=0;
         return m3d;
     }
     private ArrayList<Position3D> findNeighbors(Position3D pos,Maze3D M) {
@@ -82,7 +81,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         return neighbors;
     }
 
-    private Boolean validMov(int r, int c,int d, Maze3D M){
+    private Boolean validMov(int d,int r, int c, Maze3D M){
         // if the position neighbors is not 0
         int[][][] m = M.getMap();
         boolean flag;
@@ -104,7 +103,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
 
     private Boolean validPos(int d, int r,int c){
         // if the point is in the maze
-        return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<depths;
+        return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<=depths;
     }
     private void randomlyAddCellToStack(ArrayList<Position3D> cells) {
         // chose random paths from list of paths
