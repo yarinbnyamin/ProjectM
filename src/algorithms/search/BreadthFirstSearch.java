@@ -12,18 +12,19 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     public BreadthFirstSearch() {
         super();
         name = "BreadthFirstSearch";
+        visited = new HashMap<>();
+        queue = new LinkedList<>();
     }
 
     @Override
     public Solution solve(ISearchable s) {
-        visited = new HashMap<>();
         AState sol = null;
-        queue = new LinkedList<>();
         queue.add(s.getStartState());
 
         while (!queue.isEmpty())
         {
             AState current = queue.poll();
+            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
