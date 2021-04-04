@@ -20,7 +20,7 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
     @Override
     public Solution solve(ISearchable s) {
         AState sol = null;
-        stack.add(s.getStartState());
+        stack.push(s.getStartState());
 
         while (!stack.isEmpty())
         {
