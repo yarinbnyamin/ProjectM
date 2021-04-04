@@ -22,22 +22,21 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
     public Solution solve(ISearchable s) {
         AState sol = null;
         queue.add(s.getStartState());
-
+        visited.put(s.getStartState().hashCode(),s.getStartState());
         while (!queue.isEmpty())
         {
             AState current = queue.poll();
-            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
-            visited.put(current.hashCode(),current);
+            visitedNodes++;
 
             for (AState neighbor : s.getAllSuccessors(current))
             {
                 if(visited.containsKey(neighbor.hashCode()))
                     continue;
-
+                visited.put(neighbor.hashCode(),neighbor);
                 queue.add(neighbor);
             }
         }

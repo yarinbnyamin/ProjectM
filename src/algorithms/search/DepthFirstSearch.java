@@ -21,22 +21,21 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
     public Solution solve(ISearchable s) {
         AState sol = null;
         stack.push(s.getStartState());
-
+        visited.put(stack.peek().hashCode(),stack.peek());
         while (!stack.isEmpty())
         {
             AState current = stack.pop();
-            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
-            visited.put(current.hashCode(),current);
+            visitedNodes++;
 
             for (AState neighbor : s.getAllSuccessors(current))
             {
                 if(visited.containsKey(neighbor.hashCode()))
                     continue;
-
+                visited.put(neighbor.hashCode(),neighbor);
                 stack.push(neighbor);
             }
         }
