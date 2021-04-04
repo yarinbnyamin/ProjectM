@@ -6,7 +6,7 @@ import java.util.Objects;
 enum State {white, grey, black, goal}
 
 public abstract class AState {
-    protected State state;
+    protected State state=State.white;
     protected double cost;
     protected AState cameFrom;
 
