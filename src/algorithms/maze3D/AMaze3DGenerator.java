@@ -15,13 +15,13 @@ public abstract class AMaze3DGenerator implements IMazeGenerator3D {
         return TimeUnit.NANOSECONDS.toMillis(end_time-start_time);
     }
     protected void allNumGenerateor(Maze3D M, int num){ // fill the maze with the num
-
-        for (int i = 0; i < M.getDepth(); i++)
-            for (int j = 0; j < M.getRows(); j++)
-                for (int k = 0; k < M.getColumns(); k++) {
+        int j,k;
+        for (int i = 0; i < M.getDepth()+1; i++) {
+            for (j = 0; j < M.getRows(); j++) {
+                for (k = 0; k < M.getColumns(); k++) {
                     M.getMap()[i][j][k] = num;
                 }
-
-
+            }
+        }
     }
 }

@@ -10,13 +10,13 @@ public class Maze3D {
     private Position3D end_position;
     private int[][][] maze;
 
-    public Maze3D(int columns, int rows, int depth) {
+    public Maze3D( int depth, int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
         this.depth = depth;
         this.start_position = new Position3D(0,0,0);
-        this.end_position = new Position3D(depth-1,rows-1,columns-1);
-        this.maze = new int[depth][rows][columns];
+        this.end_position = new Position3D(depth,rows-1,columns-1);
+        this.maze = new int[depth+1][rows][columns];
     }
     public void print(){
         boolean found_start= false;
@@ -24,7 +24,7 @@ public class Maze3D {
         StringBuilder b = new StringBuilder();
         b.append("{");
         b.append("\n");
-        for (int i = 0; i < depth; i++) {
+        for (int i = 0; i <=depth; i++) {
             for (int j = 0; j < rows; j++) {
                 b.append("{ ");
                 for (int k = 0; k < columns; k++) {
@@ -46,7 +46,7 @@ public class Maze3D {
                 }//for k
                 b.append("}\n");
             }//for j
-            if (i<depth-1) {
+            if (i<depth) {
                 for (int j = 0; j < (columns * 2) + 3; j++)
                     b.append("-");
                 b.append("\n");
