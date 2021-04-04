@@ -58,4 +58,5 @@ public abstract class AState {
     public void setCameFrom(AState cameFrom) {
         this.cameFrom = cameFrom;
     }
+
 }

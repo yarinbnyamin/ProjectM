@@ -1,23 +1,18 @@
 package algorithms.search;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 public class BestFirstSearch extends BreadthFirstSearch{
 
     public BestFirstSearch() {
-
-    }
-    /*
-    @Override
-    public AState search(ISearchable s) {
-        return super.search(s);
-    }
-    */
-    @Override
-    public int getNumberOfNodesEvaluated() {
-        return visitedNodes;
+        super();
+        name = "BestFirstSearch";
+        //queue = new LinkedList<>();
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
+    public Solution solve(ISearchable s) {
+        //s.setDiagonal(true);
+        return super.solve(s);
     }
 }

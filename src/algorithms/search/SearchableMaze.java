@@ -7,11 +7,9 @@ import java.util.ArrayList;
 
 public class SearchableMaze implements ISearchable{
     private Maze maze;
-    private boolean diagonal;
 
     public SearchableMaze(Maze m) {
         maze = m;
-        this.diagonal = false;
     }
 
     @Override
@@ -32,13 +30,13 @@ public class SearchableMaze implements ISearchable{
         ArrayList<AState> successors = new ArrayList<>();
         MazeState successorState;
         MazeState mazeState = (MazeState)s;
-        ArrayList<Position> successorsPositions = mazeState.getNeighbors(diagonal);
+        ArrayList<Position> successorsPositions = mazeState.getNeighbors();
 
         for (Position pos : successorsPositions) {
 
             successorState = new MazeState(s, maze, pos);
             if (isDiagonal(mazeState.getPos(), pos))
-                successorState.setCost(s.getCost()+1.5);
+                successorState.setCost(s.getCost()+1); //  Math.sqrt(2)
             else
                 successorState.setCost(s.getCost()+1);
 
@@ -71,7 +69,7 @@ public class SearchableMaze implements ISearchable{
     public void setMaze(Maze maze) {
         this.maze = maze;
     }
-
+/*
     public boolean isDiagonal() {
         return diagonal;
     }
@@ -79,4 +77,6 @@ public class SearchableMaze implements ISearchable{
     public void setDiagonal(boolean diagonal) {
         this.diagonal = diagonal;
     }
+
+ */
 }

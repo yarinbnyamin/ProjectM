@@ -23,30 +23,30 @@ public class MazeState extends AState{
         state = pos.toString();
     }
 
-    public ArrayList<Position> getNeighbors(boolean diagonal) {
+    public ArrayList<Position> getNeighbors() {
 
         int[][] m = maze.getMaze();
         ArrayList<Position> posList = new ArrayList<>();
         int r = pos.getRowIndex(), c = pos.getColumnIndex();
 
-        if(diagonal){
-            if(validPos(r+1, c+1) && m[r+1][c+1] == 0)
-                posList.add(new Position(r+1,c+1));
-            if(validPos(r+1, c-1) && m[r+1][c-1] == 0)
-                posList.add(new Position(r+1,c-1));
-            if(validPos(r-1, c-1) && m[r-1][c-1] == 0)
-                posList.add(new Position(r-1,c-1));
-            if(validPos(r-1, c+1) && m[r-1][c+1] == 0)
-                posList.add(new Position(r-1,c+1));
-        }
-        if(validPos(r+1, c) && m[r+1][c] == 0)
-            posList.add(new Position(r+1,c));
+        // clock wize :
         if(validPos(r-1, c) && m[r-1][c] == 0)
             posList.add(new Position(r-1,c));
+        if(validPos(r-1, c+1) && m[r-1][c+1] == 0 && (m[r-1][c] == 0 || m[r][c+1] == 0))
+            posList.add(new Position(r-1,c+1));
         if(validPos(r, c+1) && m[r][c+1] == 0)
             posList.add(new Position(r,c+1));
+        if(validPos(r+1, c+1) && m[r+1][c+1] == 0 && (m[r+1][c] == 0 || m[r][c+1] == 0))
+            posList.add(new Position(r+1,c+1));
+        if(validPos(r+1, c) && m[r+1][c] == 0)
+            posList.add(new Position(r+1,c));
+        if(validPos(r+1, c-1) && m[r+1][c-1] == 0 && (m[r+1][c] == 0 || m[r][c-1] == 0))
+            posList.add(new Position(r+1,c-1));
         if(validPos(r, c-1) && m[r][c-1] == 0)
             posList.add(new Position(r,c-1));
+        if(validPos(r-1, c-1) && m[r-1][c-1] == 0 && (m[r-1][c] == 0 || m[r][c-1] == 0))
+            posList.add(new Position(r-1,c-1));
+
 
         return  posList;
     }

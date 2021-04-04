@@ -2,18 +2,20 @@ package algorithms.search;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class BreadthFirstSearch extends ASearchingAlgorithm{
 
-    private Queue<AState> queue;
-    private HashMap<Integer, AState> visited;
+    protected Queue<AState> queue;
+    protected HashMap<Integer, AState> visited;
 
     public BreadthFirstSearch() {
         super();
         name = "BreadthFirstSearch";
         visited = new HashMap<>();
         queue = new LinkedList<>();
+        //queue = new PriorityQueue<AState>();
     }
 
     @Override
