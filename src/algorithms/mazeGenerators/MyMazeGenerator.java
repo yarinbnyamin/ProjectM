@@ -39,8 +39,10 @@ public class MyMazeGenerator extends AMazeGenerator{
                 curr = s.pop();
             } while (!s.empty() && !(endPoint(r, c, M)));
             s.clear();
-            if(count < r*c*0.35) // if the maze not full enough
+            if(count < r*c*0.75) { // if the maze not full enough
                 ended = false;
+                count=0;
+            }
         }while(!ended); // we we ended the generate but we didn't got to the end
         M.getMaze()[rows-1][columns-1]=0;
         return M;
