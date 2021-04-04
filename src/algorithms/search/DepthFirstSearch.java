@@ -1,31 +1,49 @@
 package algorithms.search;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class DepthFirstSearch extends ASearchingAlgorithm{
-    private LinkedList<AState> neighborsLst;
-    @Override
-    public Solution solve(ISearchable domain) {
-        AState start= domain.getStartState();
-        AState goal= domain.getGoalState();
-        AState sol=dfsRec(start,goal,domain);
-        return backtrackSol(sol);
+
+    private Stack<AState> stack;
+    private HashMap<Integer, AState> visited;
+
+    public DepthFirstSearch() {
+        super();
+        name = "DepthFirstSearch";
+        visited = new HashMap<>();
+        stack = new Stack<>();
     }
-    public AState dfsRec(AState current,AState goal,ISearchable domain){
-        current.setState(State.grey);
-        if (current.equals(goal))
-            return current;
-        for (AState neighbor : domain.getAllSuccessors(current)) {
-            if (neighbor.getState().equals(State.white)){
-                if (dfsRec(neighbor,goal,domain).equals(goal))
-                    return neighbor;
+
+    @Override
+    public Solution solve(ISearchable s) {
+        AState sol = null;
+        stack.push(s.getStartState());
+
+        while (!stack.isEmpty())
+        {
+            AState current = stack.pop();
+            visitedNodes++;
+            if (current.equals(s.getGoalState())){
+                sol = current;
+                break;
+            }
+            visited.put(current.hashCode(),current);
+
+            for (AState neighbor : s.getAllSuccessors(current))
+            {
+                if(visited.containsKey(neighbor.hashCode()))
+                    continue;
+
+                stack.push(neighbor);
             }
         }
-        current.setState(State.black);
-        return null;
+
+        if(sol == null)
+            return null;
+        return backtrackSol(sol);
     }
-    @Override
-    public String getName() {
-        return super.getName();
-    }
+
 }

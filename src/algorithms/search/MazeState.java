@@ -13,14 +13,14 @@ public class MazeState extends AState{
         super(cameFrom);
         this.maze = maze;
         this.pos = maze.getStartPosition();
-        state = State.white;
+        state = pos.toString();
     }
 
     public MazeState(AState cameFrom, Maze maze, Position pos) {
         super(cameFrom);
         this.maze = maze;
         this.pos = pos;
-        state = State.white;
+        state = pos.toString();
     }
 
     public ArrayList<Position> getNeighbors(boolean diagonal) {
@@ -54,11 +54,6 @@ public class MazeState extends AState{
     private Boolean validPos(int r, int c){
         // if the point is in the maze
         return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows();
-    }
-
-    @Override
-    public String toString() {
-        return "[" + state + ", " + cameFrom + ", " + cost + "]";
     }
 
     public Maze getMaze() {

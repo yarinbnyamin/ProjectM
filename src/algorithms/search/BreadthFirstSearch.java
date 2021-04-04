@@ -1,56 +1,48 @@
 package algorithms.search;
 
-import java.util.AbstractQueue;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class BreadthFirstSearch extends ASearchingAlgorithm{
 
     private Queue<AState> queue;
+    private HashMap<Integer, AState> visited;
+
+    public BreadthFirstSearch() {
+        super();
+        name = "BreadthFirstSearch";
+        visited = new HashMap<>();
+        queue = new LinkedList<>();
+    }
 
     @Override
     public Solution solve(ISearchable s) {
         AState sol = null;
-        queue = new LinkedList<>();
         queue.add(s.getStartState());
-
 
         while (!queue.isEmpty())
         {
             AState current = queue.poll();
+            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
-
-            if(current.getState().equals(State.grey))
-                current.setState(State.black);
-            else
-                current.setState(State.grey);
-
-
-
+            visited.put(current.hashCode(),current);
 
             for (AState neighbor : s.getAllSuccessors(current))
             {
+                if(visited.containsKey(neighbor.hashCode()))
+                    continue;
 
-                //neighbor.setState("grey");
-                if(!(neighbor.getState().equals(State.black) || neighbor.getState().equals(State.grey))) {
-                    neighbor.setState(State.grey);
-                    queue.add(neighbor);
-                }
-
-                //queue.add(neighbor);
+                queue.add(neighbor);
             }
-
         }
 
+        if(sol == null)
+            return null;
         return backtrackSol(sol);
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
 }

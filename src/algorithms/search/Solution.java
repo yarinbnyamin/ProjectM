@@ -22,6 +22,6 @@ public class Solution {
     }
 
     public boolean isSolvable(){
-        return solPath.size()>0;
+        return solPath == null;
     }
 }
