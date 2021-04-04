@@ -3,6 +3,18 @@ package algorithms.search;
 import java.util.LinkedList;
 
 public class DepthFirstSearch extends ASearchingAlgorithm{
+
+    public DepthFirstSearch() {
+        super();
+        name = "DepthFirstSearch";
+    }
+
+    @Override
+    public Solution solve(ISearchable domain) {
+        return null;
+    }
+
+    /*
     private LinkedList<AState> neighborsLst;
     @Override
     public Solution solve(ISearchable domain) {
@@ -28,4 +40,6 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
     public String getName() {
         return super.getName();
     }
+
+     */
 }

@@ -3,10 +3,9 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.Objects;
 
-enum State {white, grey, black, goal}
 
 public abstract class AState {
-    protected State state=State.white;
+    protected String state;
     protected double cost;
     protected AState cameFrom;
 
@@ -15,15 +14,33 @@ public abstract class AState {
     }
 
     public boolean equals(AState state) {
-        return this.state == state.getState();
+        return this.state.equals(state.getState());
     }
 
-    public State getState() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AState aState = (AState) o;
+        return Double.compare(aState.cost, cost) == 0 && Objects.equals(state, aState.state) && Objects.equals(cameFrom, aState.cameFrom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
+    }
+
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return state;
     }
 
     public double getCost() {
