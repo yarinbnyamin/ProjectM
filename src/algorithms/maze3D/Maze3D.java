@@ -29,14 +29,14 @@ public class Maze3D {
                 b.append("{ ");
                 for (int k = 0; k < columns; k++) {
                     if (!found_start){
-                        if(start_position.getRowIndex() == j && start_position.getColumnIndex() == k) {
+                        if(start_position.getRowIndex() == j && start_position.getColumnIndex() == k&& start_position.getDepthIndex()==i) {
                             b.append("S ");
                             found_start = true;
                             continue;
                         }
                     }
                     else if(!found_goal){
-                        if(end_position.getRowIndex() == j && end_position.getColumnIndex() == k) {
+                        if(end_position.getRowIndex() == j && end_position.getColumnIndex() == k&& end_position.getDepthIndex()==i) {
                             b.append("E ");
                             found_goal = true;
                             continue;
@@ -46,11 +46,11 @@ public class Maze3D {
                 }//for k
                 b.append("}\n");
             }//for j
-            if (i<=depth-1) {
+            if (i<depth-1) {
                 for (int j = 0; j < (columns * 2) + 3; j++)
                     b.append("-");
+                b.append("\n");
             }
-            b.append("\n");
         }//for i depth
         b.append("}");
         System.out.println(b);

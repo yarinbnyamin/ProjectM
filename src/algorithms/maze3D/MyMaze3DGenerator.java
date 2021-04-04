@@ -28,7 +28,6 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
            m3d=new Maze3D(depths,rows,columns);
             int[][][] m = m3d.getMap();
             allNumGenerateor(m3d, 1);
-            m3d.print();
             s.push(new Position3D(0,0,0));
             Position3D curr = s.peek();
             ArrayList<Position3D> neighbors;
