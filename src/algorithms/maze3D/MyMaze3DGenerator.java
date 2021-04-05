@@ -43,8 +43,10 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
                 curr = s.pop();
             }while (!s.empty() && !(endPoint(d,r, c,m3d)));
             s.clear();
-            if(count < r*c*0.35) // if the maze not full enough
+            if(count < r*c*0.75) {// if the maze not full enough
                 ended = false;
+                count=0;
+            }
         }while(!ended);
         m3d.getMap()[depths][rows-1][columns-1]=0;
         return m3d;
