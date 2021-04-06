@@ -25,11 +25,12 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
         while (!stack.isEmpty())
         {
             AState current = stack.pop();
+            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
-            visitedNodes++;
+
 
             for (AState neighbor : s.getAllSuccessors(current))
             {

@@ -35,11 +35,7 @@ public class SearchableMaze implements ISearchable{
         for (Position pos : successorsPositions) {
 
             successorState = new MazeState(s, maze, pos);
-            if (isDiagonal(mazeState.getPos(), pos))
-                successorState.setCost(s.getCost()+1); //  Math.sqrt(2)
-            else
-                successorState.setCost(s.getCost()+1);
-
+            successorState.setCost(s.getCost()+1);
             successors.add(successorState);
         }
 

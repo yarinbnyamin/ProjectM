@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-public abstract class AState {
+public abstract class AState implements Comparable{
     protected String state;
     protected double cost;
     protected AState cameFrom;
@@ -15,6 +15,12 @@ public abstract class AState {
 
     public boolean equals(AState state) {
         return this.state.equals(state.getState());
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        AState ostate = (AState) o;
+        return (int)(cost - ostate.getCost());
     }
 
     @Override

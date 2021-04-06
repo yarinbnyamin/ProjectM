@@ -9,12 +9,14 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
 
     protected Queue<AState> queue;
     protected HashMap<Integer, AState> visited;
+    protected boolean isDiagonal;
 
     public BreadthFirstSearch() {
         super();
         name = "BreadthFirstSearch";
         visited = new HashMap<>();
         queue = new LinkedList<>();
+        isDiagonal=false;
         //queue = new PriorityQueue<AState>();
     }
 
@@ -26,17 +28,20 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         while (!queue.isEmpty())
         {
             AState current = queue.poll();
+            visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
-            visitedNodes++;
+
 
             for (AState neighbor : s.getAllSuccessors(current))
             {
                 if(visited.containsKey(neighbor.hashCode()))
                     continue;
                 visited.put(neighbor.hashCode(),neighbor);
+                if(isDiagonal)
+                    neighbor.setCost(neighbor.getCost() + Math.sqrt(2) - 1);
                 queue.add(neighbor);
             }
         }
