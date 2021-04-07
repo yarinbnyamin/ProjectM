@@ -1,30 +1,25 @@
 package algorithms.search;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 public class DepthFirstSearch extends ASearchingAlgorithm{
 
-    private Stack<AState> stack;
-    private HashMap<Integer, AState> visited;
+    private Stack<AState> openList;
 
     public DepthFirstSearch() {
         super();
         name = "DepthFirstSearch";
-        visited = new HashMap<>();
-        stack = new Stack<>();
+        openList = new Stack<>();
     }
 
     @Override
     public Solution solve(ISearchable s) {
         AState sol = null;
-        stack.push(s.getStartState());
-        visited.put(stack.peek().hashCode(),stack.peek());
-        while (!stack.isEmpty())
+        openList.push(s.getStartState());
+        closeList.put(openList.peek().hashCode(),openList.peek());
+        while (!openList.isEmpty())
         {
-            AState current = stack.pop();
+            AState current = openList.pop();
             visitedNodes++;
             if (current.equals(s.getGoalState())){
                 sol = current;
@@ -34,10 +29,10 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
 
             for (AState neighbor : s.getAllSuccessors(current))
             {
-                if(visited.containsKey(neighbor.hashCode()))
+                if(closeList.containsKey(neighbor.hashCode()))
                     continue;
-                visited.put(neighbor.hashCode(),neighbor);
-                stack.push(neighbor);
+                closeList.put(neighbor.hashCode(),neighbor);
+                openList.push(neighbor);
             }
         }
 

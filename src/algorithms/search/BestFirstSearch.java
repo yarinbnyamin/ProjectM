@@ -1,7 +1,5 @@
 package algorithms.search;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class BestFirstSearch extends BreadthFirstSearch{
@@ -9,7 +7,7 @@ public class BestFirstSearch extends BreadthFirstSearch{
     public BestFirstSearch() {
         super();
         name = "BestFirstSearch";
-        queue = new PriorityQueue<>();
+        openList = new PriorityQueue<>();
         isDiagonal=true;
     }
 

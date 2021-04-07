@@ -1,23 +1,18 @@
 package algorithms.search;
 
-import java.util.PriorityQueue;
+import java.util.HashMap;
 
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
-    //protected PriorityQueue<AState> openList;
+    protected HashMap<Integer, AState> closeList;
     protected int visitedNodes;
     protected String name;
 
     public ASearchingAlgorithm() {
-        //openList = new PriorityQueue<>();
         name = "noname";
         visitedNodes = 0;
+        closeList = new HashMap<>();
     }
-    /*
-    protected AState popOpenList(){
-        visitedNodes++;
-        return openList.poll();
-    }
-    */
+
     protected Solution backtrackSol(AState goalState){
         Solution sol=new Solution();
         AState preState =goalState;

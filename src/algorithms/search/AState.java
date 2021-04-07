@@ -1,6 +1,5 @@
 package algorithms.search;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -19,8 +18,8 @@ public abstract class AState implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        AState ostate = (AState) o;
-        return (int)(cost - ostate.getCost());
+        AState other_state = (AState) o;
+        return (int)(cost - other_state.getCost());
     }
 
     @Override
