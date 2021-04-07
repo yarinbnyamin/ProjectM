@@ -16,7 +16,7 @@ public class Maze3D {
         this.depth = depth;
         this.start_position = new Position3D(0,0,0);
         this.end_position = new Position3D(depth,rows-1,columns-1);
-        this.maze = new int[depth+1][rows][columns];
+        this.maze = new int[depth][rows][columns];
     }
     public void print(){
         boolean found_start= false;
@@ -24,7 +24,7 @@ public class Maze3D {
         StringBuilder b = new StringBuilder();
         b.append("{");
         b.append("\n");
-        for (int i = 0; i <=depth; i++) {
+        for (int i = 0; i <depth; i++) {
             for (int j = 0; j < rows; j++) {
                 b.append("{ ");
                 for (int k = 0; k < columns; k++) {
@@ -46,7 +46,7 @@ public class Maze3D {
                 }//for k
                 b.append("}\n");
             }//for j
-            if (i<depth) {
+            if (i<depth-1) {
                 for (int j = 0; j < (columns * 2) + 3; j++)
                     b.append("-");
                 b.append("\n");
