@@ -10,12 +10,12 @@ public class Maze3D {
     private Position3D end_position;
     private int[][][] maze;
 
-    public Maze3D( int depth, int columns, int rows) {
+    public Maze3D( int depth, int rows, int columns) {
         this.columns = columns;
         this.rows = rows;
         this.depth = depth;
         this.start_position = new Position3D(0,0,0);
-        this.end_position = new Position3D(depth,rows-1,columns-1);
+        this.end_position = new Position3D(depth-1,rows-1,columns-1);
         this.maze = new int[depth][rows][columns];
     }
     public void print(){

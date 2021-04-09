@@ -40,13 +40,13 @@ public class Maze3DState extends AState {
         if(validPos(d+1,r, c) && m[d+1][r][c] == 0)
             posList.add(new Position3D(d+1,r,c));
         if(validPos(d-1,r, c) && m[d-1][r][c] == 0)
-            posList.add(new Position3D(d+1,r,c));
+            posList.add(new Position3D(d-1,r,c));
         return  posList;
     }
 
     private Boolean validPos(int d, int r,int c){
         // if the point is in the maze
-        return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows() && d>=0 && d<=maze.getDepth();
+        return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows() && d>=0 && d<maze.getDepth();
     }
 
     public Maze3D getMaze() {
