@@ -6,13 +6,11 @@ import java.util.Queue;
 
 public class BreadthFirstSearch extends ASearchingAlgorithm{
     protected Queue<AState> openList;
-    protected boolean isDiagonal;
 
     public BreadthFirstSearch() {
         super();
         name = "BreadthFirstSearch";
         openList = new LinkedList<>();
-        isDiagonal=false;
     }
 
     @Override
@@ -34,8 +32,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
                 if(closeList.containsKey(neighbor.hashCode()))
                     continue;
                 closeList.put(neighbor.hashCode(),neighbor);
-                if(isDiagonal)
-                    neighbor.setCost(neighbor.getCost() + Math.sqrt(2) - 1);
                 openList.add(neighbor);
             }
         }

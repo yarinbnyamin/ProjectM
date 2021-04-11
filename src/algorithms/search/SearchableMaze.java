@@ -28,34 +28,13 @@ public class SearchableMaze implements ISearchable{
     public ArrayList<AState> getAllSuccessors(AState s) {
 
         ArrayList<AState> successors = new ArrayList<>();
-        MazeState successorState;
-        MazeState mazeState = (MazeState)s;
-        ArrayList<Position> successorsPositions = mazeState.getNeighbors();
+        ArrayList<Position> successorsPositions = ((MazeState)s).getNeighbors();
 
         for (Position pos : successorsPositions) {
-
-            successorState = new MazeState(s, maze, pos);
-            successorState.setCost(s.getCost()+1);
-            successors.add(successorState);
+            successors.add(new MazeState(s, maze, pos));
         }
 
         return successors;
-    }
-
-    private boolean isDiagonal(Position from, Position to){
-        int Rfrom = from.getRowIndex();
-        int Cfrom = from.getColumnIndex();
-        int Rto = to.getRowIndex();
-        int Cto = to.getColumnIndex();
-
-        if (Rfrom > Rto && Cfrom > Cto)
-            return true;
-        if (Rfrom > Rto && Cfrom < Cto)
-            return true;
-        if (Rfrom < Rto && Cfrom < Cto)
-            return true;
-        return Rfrom < Rto && Cfrom > Cto;
-
     }
 
     public Maze getMaze() {
@@ -65,14 +44,5 @@ public class SearchableMaze implements ISearchable{
     public void setMaze(Maze maze) {
         this.maze = maze;
     }
-/*
-    public boolean isDiagonal() {
-        return diagonal;
-    }
 
-    public void setDiagonal(boolean diagonal) {
-        this.diagonal = diagonal;
-    }
-
- */
 }

@@ -9,18 +9,26 @@ public class MazeState extends AState{
     private Maze maze;
     Position pos;
 
+    /*
     public MazeState(AState cameFrom, Maze maze) {
         super(cameFrom);
         this.maze = maze;
         this.pos = maze.getStartPosition();
         state = pos.toString();
     }
+    */
 
     public MazeState(AState cameFrom, Maze maze, Position pos) {
         super(cameFrom);
         this.maze = maze;
         this.pos = pos;
         state = pos.toString();
+        if(cameFrom != null) {
+            if (isDiagonal(((MazeState) cameFrom).getPos(), pos))
+                cost = cameFrom.getCost() + Math.sqrt(2); // Math.sqrt(2)
+            else
+                cost = cameFrom.getCost() + 1;
+        }
     }
 
     public ArrayList<Position> getNeighbors() {
@@ -54,6 +62,22 @@ public class MazeState extends AState{
     private Boolean validPos(int r, int c){
         // if the point is in the maze
         return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows();
+    }
+
+    private boolean isDiagonal(Position from, Position to){
+        int Rfrom = from.getRowIndex();
+        int Cfrom = from.getColumnIndex();
+        int Rto = to.getRowIndex();
+        int Cto = to.getColumnIndex();
+
+        if (Rfrom > Rto && Cfrom > Cto)
+            return true;
+        if (Rfrom > Rto && Cfrom < Cto)
+            return true;
+        if (Rfrom < Rto && Cfrom < Cto)
+            return true;
+        return Rfrom < Rto && Cfrom > Cto;
+
     }
 
     public Maze getMaze() {
