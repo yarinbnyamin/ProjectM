@@ -10,6 +10,7 @@ public abstract class AState implements Comparable{
 
     public AState(AState cameFrom) {
         this.cameFrom = cameFrom;
+        cost = 0;
     }
 
     public boolean equals(AState state) {
@@ -17,9 +18,9 @@ public abstract class AState implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Object o) { // here or on mazestate ?
         AState other_state = (AState) o;
-        return (int)(cost - other_state.getCost());
+        return Double.compare(cost, other_state.getCost());
     }
 
     @Override

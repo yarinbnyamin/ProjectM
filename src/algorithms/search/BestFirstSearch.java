@@ -8,11 +8,9 @@ public class BestFirstSearch extends BreadthFirstSearch{
         super();
         name = "BestFirstSearch";
         openList = new PriorityQueue<>();
-        isDiagonal=true;
     }
 
     public Solution solve(ISearchable s) {
-        //s.setDiagonal(true);
         return super.solve(s);
     }
 }
