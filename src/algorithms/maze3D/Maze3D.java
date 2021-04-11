@@ -10,7 +10,11 @@ public class Maze3D {
     private Position3D end_position;
     private int[][][] maze;
 
-    public Maze3D( int depth, int rows, int columns) {
+    public Maze3D( int depth, int rows, int columns) throws Exception {
+
+        if (rows < 2 || columns < 2 || depth < 2)
+            throw new Exception("Maze size is smaller than 2x2x2");
+
         this.columns = columns;
         this.rows = rows;
         this.depth = depth;

@@ -12,7 +12,7 @@ import algorithms.search.*;
 import java.util.ArrayList;
 
 public class RunSearchOnMaze3D {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         IMazeGenerator3D mg = new MyMaze3DGenerator();
         Maze3D maze = mg.generate(2, 4,4);
         maze.print();

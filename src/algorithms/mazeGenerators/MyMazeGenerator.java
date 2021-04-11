@@ -12,7 +12,7 @@ public class MyMazeGenerator extends AMazeGenerator{
     private double how_full; // we ended to generate complex
 
     @Override
-    public Maze generate(int rows, int columns) {
+    public Maze generate(int rows, int columns) throws Exception {
         this.rows = rows;
         this.columns = columns;
         how_full = 1;

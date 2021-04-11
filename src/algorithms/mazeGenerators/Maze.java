@@ -7,7 +7,11 @@ public class Maze {
     private Position end_position;
     private int[][] maze;
 
-    public Maze(int rows, int columns) {
+    public Maze(int rows, int columns) throws Exception {
+
+        if (rows < 2 || columns < 2)
+            throw new Exception("Maze size is smaller than 2x2");
+
         this.columns = columns;
         this.rows = rows;
         this.maze = new int[rows][columns];

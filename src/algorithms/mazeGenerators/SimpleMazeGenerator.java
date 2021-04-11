@@ -6,7 +6,7 @@ import java.util.Random;
 public class SimpleMazeGenerator extends AMazeGenerator{
     private Random rand = new Random();
     @Override
-    public Maze generate(int rows, int columns) {
+    public Maze generate(int rows, int columns) throws Exception {
         Maze Sm = new Maze(rows,columns);
         onePathGenerateor(Sm);
         randomlyAddZeros(Sm);

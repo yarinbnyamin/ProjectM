@@ -1,8 +1,5 @@
 package algorithms.maze3D;
 
-import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.Position;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
@@ -15,7 +12,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
     private  int depths;
     private double how_full; // we ended to generate complex
     @Override
-    public Maze3D generate(int depth, int row, int column) {
+    public Maze3D generate(int depth, int row, int column) throws Exception{
         this.rows = row;
         this.columns = column;
         this.depths=depth;

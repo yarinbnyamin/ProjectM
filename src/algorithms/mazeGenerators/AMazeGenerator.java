@@ -5,10 +5,10 @@ import java.util.concurrent.TimeUnit;
 public abstract class AMazeGenerator implements IMazeGenerator{
 
     @Override
-    public abstract Maze generate(int rows, int columns);
+    public abstract Maze generate(int rows, int columns) throws Exception;
 
     @Override
-    public long measureAlgorithmTimeMillis(int rows, int columns) {
+    public long measureAlgorithmTimeMillis(int rows, int columns) throws Exception {
         long start_time,end_time;
         start_time = System.nanoTime();
         generate(rows, columns);

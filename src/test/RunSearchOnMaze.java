@@ -6,7 +6,7 @@ import algorithms.search.*;
 import java.util.ArrayList;
 
 public class RunSearchOnMaze {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         IMazeGenerator mg = new MyMazeGenerator();
         Maze maze = mg.generate(10, 10);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
