@@ -9,17 +9,20 @@ public class MyMazeGenerator extends AMazeGenerator{
     private Random rand = new Random();
     private int rows;
     private int columns;
-    private boolean ended; // we ended to generate
+    private double how_full; // we ended to generate complex
 
     @Override
     public Maze generate(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
+        how_full = 1;
         int r;
         int c;
-        int count = 0; // how fill the maze is
+        int count; // how fill the maze is
         Maze M;
         do{
+            how_full -= 0.1;
+            count=0;
             M = new Maze(rows,columns);
             int[][] m = M.getMaze();
             allNumGenerateor(M, 1); // start with all one's
@@ -39,11 +42,7 @@ public class MyMazeGenerator extends AMazeGenerator{
                 curr = s.pop();
             } while (!s.empty() && !(endPoint(r, c, M)));
             s.clear();
-            if(count < r*c*0.75) { // if the maze not full enough
-                ended = false;
-                count=0;
-            }
-        }while(!ended); // we we ended the generate but we didn't got to the end
+        }while(count < rows*columns*how_full || !endPoint(r, c, M)); // we we ended the generate but we didn't got to the end
         M.getMaze()[rows-1][columns-1]=0;
         return M;
 
@@ -110,9 +109,6 @@ public class MyMazeGenerator extends AMazeGenerator{
         flag = flag || ((r == rE) && (c+1 == cE));
         //flag = flag || (r-1 == rE) && (c == cE);
         //flag = flag || (r == rE) && (c-1== cE);
-
-        if(flag)
-            ended = true;
 
         return flag;
     }

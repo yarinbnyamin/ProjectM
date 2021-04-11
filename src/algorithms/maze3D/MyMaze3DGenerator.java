@@ -13,18 +13,21 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
     private int rows;
     private int columns;
     private  int depths;
-    private boolean ended;
+    private double how_full; // we ended to generate complex
     @Override
     public Maze3D generate(int depth, int row, int column) {
         this.rows = row;
         this.columns = column;
         this.depths=depth;
+        how_full = 1;
         int r;
         int c;
         int d;
-        int count = 0; // how fill the maze is
+        int count; // how fill the maze is
         Maze3D m3d;
         do {
+            how_full -= 0.1;
+            count=0;
            m3d=new Maze3D(depths,rows,columns);
             int[][][] m = m3d.getMap();
             allNumGenerateor(m3d, 1);
@@ -43,11 +46,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
                 curr = s.pop();
             }while (!s.empty() && !(endPoint(d,r, c,m3d)));
             s.clear();
-            if(count < d*r*c*0.75) {// if the maze not full enough
-                ended = false;
-                count=0;
-            }
-        }while(!ended);
+        }while(count < rows*columns*depth*how_full || !endPoint(d, r, c, m3d));
         m3d.getMap()[depths-1][rows-1][columns-1]=0;
         return m3d;
     }
@@ -128,9 +127,6 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         flag = flag || ((r == rE) && (c == cE))&&(d+1==dE);
         flag = flag || ((r == rE) && (c == cE))&&(d-1==dE);
 
-
-        if(flag)
-            ended = true;
         return flag;
     }
 
