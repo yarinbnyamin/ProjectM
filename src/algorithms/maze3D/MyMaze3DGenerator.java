@@ -11,23 +11,31 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
     private int columns;
     private  int depths;
     private double how_full; // we ended to generate complex
+
+    /**
+     * @param depth
+     * @param row
+     * @param column
+     * @return a 3D maze with at least one path for a solution
+     * @throws Exception
+     */
     @Override
     public Maze3D generate(int depth, int row, int column) throws Exception{
         this.rows = row;
         this.columns = column;
         this.depths=depth;
-        how_full = 1;
+        how_full = 1;// a variable that represent the value of the "complexity" of the maze generated
         int r;
         int c;
         int d;
-        int count; // how fill the maze is
+        int count; // counts the "0"'s (non walls cells) that the maze generates
         Maze3D m3d;
         do {
             how_full -= 0.1;
             count=0;
-           m3d=new Maze3D(depths,rows,columns);
+            m3d=new Maze3D(depths,rows,columns);
             int[][][] m = m3d.getMap();
-            allNumGenerateor(m3d, 1);
+            allNumGenerateor(m3d, 1);//generates a maze and fill it with walls only.
             s.push(new Position3D(0,0,0));
             Position3D curr = s.peek();
             ArrayList<Position3D> neighbors;
@@ -36,17 +44,23 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
                 c = curr.getColumnIndex();
                 d = curr.getDepthIndex();
                 m[d][r][c] = 1;
-                neighbors = findNeighbors(curr,m3d);
-                m[d][r][c] = 0;
+                neighbors = findNeighbors(curr,m3d);//finds all the possible positions that the maze can expend into.
+                m[d][r][c] = 0;//sets the current position as path
                 randomlyAddCellToStack(neighbors);
                 count++;
                 curr = s.pop();
             }while (!s.empty() && !(endPoint(d,r, c,m3d)));
             s.clear();
-        }while(count < rows*columns*depth*how_full || !endPoint(d, r, c, m3d));
+        }while(count < rows*columns*depths*how_full || !endPoint(d, r, c, m3d));//if the maze is not "complex" enough make a new one
         m3d.getMap()[depths-1][rows-1][columns-1]=0;
         return m3d;
     }
+
+    /**
+     * @param pos current position
+     * @param M a 3D maze
+     * @return a list of all the positions that a state can expend into.
+     */
     private ArrayList<Position3D> findNeighbors(Position3D pos,Maze3D M) {
         // return a list with all the possible paths
         ArrayList<Position3D> neighbors = new ArrayList<>();
@@ -79,10 +93,17 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         return neighbors;
     }
 
+    /**
+     * @param d Depth
+     * @param r Row
+     * @param c Column
+     * @param M a 3D maze
+     * @return if a move into a neighbor cell is valid
+     */
     private Boolean validMov(int d,int r, int c, Maze3D M){
         // if the position neighbors is not 0
         int[][][] m = M.getMap();
-        boolean flag;
+        boolean flag; // a variable that checks if the neighbor cell being expended into is surrounded with walls
         flag = m[d][r][c] == 1;
         if(validPos(d,r-1, c))
             flag = flag && (m[d][r-1][c] == 1);
@@ -98,19 +119,36 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
             flag = flag && (m[d-1][r][c] == 1);
         return flag;
     }
-
+    /** checks that a positions coordinates are within the maze borders ********** delete(?)
+     * @param d Depth
+     * @param r Row
+     * @param c Column
+     * @return if the position coordinates is within the maze borders
+     */
     private Boolean validPos(int d, int r,int c){
         // if the point is in the maze
         return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<depths;
     }
+
+    /**randomly Adds Cells To Stack of positions *****(?change?)*****
+     * @param cells list of positions
+     */
     private void randomlyAddCellToStack(ArrayList<Position3D> cells) {
         // chose random paths from list of paths
         if(cells.isEmpty())
             return;
         Position3D pos = cells.get(rand.nextInt(cells.size()));
         s.push(pos);
-        s.push(pos);
+        s.push(pos);//*********************delet(?)
     }
+
+    /**
+     * @param d Depth
+     * @param r Row
+     * @param c Column
+     * @param M a 3D maze
+     * @return if the current current position is the Goal position or one step near it
+     */
     private boolean endPoint(int d,int r, int c,Maze3D M){
         // if we got to the end point or one step near it
         Position3D endPos = M.getGoalPosition();

@@ -22,13 +22,16 @@ public class Maze3DState extends AState {
         state = pos.toString();
     }
 
+    /**
+     * @return a list of all the positions that a state can go to.
+     */
     public ArrayList<Position3D> getNeighbors() {
 
         int[][][] m = maze.getMap();
         ArrayList<Position3D> posList = new ArrayList<>();
         int r = pos.getRowIndex(), c = pos.getColumnIndex(), d = pos.getDepthIndex();
 
-        // clock wize :
+        //checks all possible neighbors of a position for a path clockwise :
         if(validPos(d,r-1, c) && m[d][r-1][c] == 0)
             posList.add(new Position3D(d,r-1,c));
         if(validPos(d,r, c+1) && m[d][r][c+1] == 0)
@@ -44,6 +47,12 @@ public class Maze3DState extends AState {
         return  posList;
     }
 
+    /** checks that a positions coordinates are within the maze borders
+     * @param d Depth
+     * @param r Row
+     * @param c Column
+     * @return if the position coordinates is within the maze borders
+     */
     private Boolean validPos(int d, int r,int c){
         // if the point is in the maze
         return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows() && d>=0 && d<maze.getDepth();

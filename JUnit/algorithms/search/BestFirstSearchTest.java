@@ -13,6 +13,9 @@ class BestFirstSearchTest {
     ISearchingAlgorithm best = new BestFirstSearch();
 
 
+    /** in an open maze (no walls) and equal rows and columns BestFirstSearch should return a diagonal line path solution
+     * @throws Exception
+     */
     @Test
     public void diagonalFullZero() throws Exception {
         mg = new EmptyMazeGenerator();
@@ -21,10 +24,13 @@ class BestFirstSearchTest {
         Solution solution = best.solve(searchableMaze);
         ArrayList<AState> solutionPath = solution.getSolutionPath();
         for (int i = 0; i < 100; i++) {
-            assertEquals("{" + i + "," + i + "}",solutionPath.get(i).toString());
+            assertEquals("{" + i + "," + i + "}",solutionPath.get(i).toString());//check if the solution path is a diagonal line
         }
     }
 
+    /** in a closed maze (only walls and no path) the solution is null
+     * @throws Exception
+     */
     @Test
     void noExit() throws Exception {
         mg = new EmptyMazeGenerator();
@@ -35,9 +41,12 @@ class BestFirstSearchTest {
         maze.getMaze()[1][1] = 1;
         SearchableMaze searchableMaze = new SearchableMaze(maze);
         Solution solution = best.solve(searchableMaze);
-        assertNull(solution);
+        assertNull(solution);//the solution should return null because there is no solution path
     }
 
+    /** checks in a specific maze if the path do not go throw a wall for a diagonal shorter path
+     * @throws Exception
+     */
     @Test
     void noValidDiagonal() throws Exception {
         mg = new EmptyMazeGenerator();
@@ -47,10 +56,13 @@ class BestFirstSearchTest {
         SearchableMaze searchableMaze = new SearchableMaze(maze);
         Solution solution = best.solve(searchableMaze);
         ArrayList<AState> solutionPath = solution.getSolutionPath();
-        assertEquals(4, solutionPath.size());
+        assertEquals(4, solutionPath.size());//this specific maze should return a ptah of 4 steps
     }
 
 
+    /**checks that the BestFirstSearch algorithm will return a shorter path or equal to that of the dfs algorithm
+     * @throws Exception
+     */
     @Test
     void shorterPath() throws Exception {
         mg = new MyMazeGenerator();
@@ -68,6 +80,9 @@ class BestFirstSearchTest {
     }
 
 
+    /**checks that the BestFirstSearch algorithm fineds a solution to a 1000X1000 maze in under 1 min
+     * @throws Exception
+     */
     @Test
     void timeUnderOneMin() throws Exception {
         long start_time,end_time;

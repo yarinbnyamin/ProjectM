@@ -14,6 +14,11 @@ public abstract class AMaze3DGenerator implements IMazeGenerator3D {
         end_time = System.nanoTime();
         return TimeUnit.NANOSECONDS.toMillis(end_time-start_time);
     }
+
+    /** helping function that sets all the cells of the matrix to a specific value
+     * @param M a 3D maze
+     * @param num the value being set to every cell in the matrix
+     */
     protected void allNumGenerateor(Maze3D M, int num){ // fill the maze with the num
         int j,k;
         for (int i = 0; i < M.getDepth(); i++) {

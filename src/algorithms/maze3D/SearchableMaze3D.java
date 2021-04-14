@@ -26,6 +26,10 @@ public class SearchableMaze3D implements ISearchable {
         return new Maze3DState(null, maze, maze.getGoalPosition());
     }
 
+    /**
+     * @param s a current State
+     * @return a list of all the Successors of the current State
+     */
     @Override
     public ArrayList<AState> getAllSuccessors(AState s) {
         ArrayList<AState> successors = new ArrayList<>();
