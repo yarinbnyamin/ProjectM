@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public class Maze3DState extends AState {
     private Maze3D maze;
     Position3D pos;
+    /*
     public Maze3DState(AState cameFrom, Maze3D maze) {
         super(cameFrom);
         this.maze = maze;
         this.pos = maze.getStartPosition();
         state = pos.toString();
     }
+    */
     public Maze3DState(AState cameFrom, Maze3D maze, Position3D pos) {
         super(cameFrom);
         this.maze = maze;
@@ -31,7 +33,7 @@ public class Maze3DState extends AState {
         ArrayList<Position3D> posList = new ArrayList<>();
         int r = pos.getRowIndex(), c = pos.getColumnIndex(), d = pos.getDepthIndex();
 
-        //checks all possible neighbors of a position for a path clockwise :
+        //checks all possible neighbors of a position for a path :
         if(validPos(d,r-1, c) && m[d][r-1][c] == 0)
             posList.add(new Position3D(d,r-1,c));
         if(validPos(d,r, c+1) && m[d][r][c+1] == 0)

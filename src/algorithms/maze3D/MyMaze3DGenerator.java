@@ -24,7 +24,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         this.rows = row;
         this.columns = column;
         this.depths=depth;
-        how_full = 1;// a variable that represent the value of the "complexity" of the maze generated
+        how_full = 1;// a variable that represent the value of the "complexity"\"fullness" of the maze generated
         int r;
         int c;
         int d;
@@ -130,7 +130,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<depths;
     }
 
-    /**randomly Adds Cells To Stack of positions *****(?change?)*****
+    /**randomly Adds Cells To Stack of positions
      * @param cells list of positions
      */
     private void randomlyAddCellToStack(ArrayList<Position3D> cells) {
@@ -139,7 +139,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
             return;
         Position3D pos = cells.get(rand.nextInt(cells.size()));
         s.push(pos);
-        s.push(pos);//*********************delet(?)
+        s.push(pos);
     }
 
     /**
