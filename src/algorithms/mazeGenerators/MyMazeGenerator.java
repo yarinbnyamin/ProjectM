@@ -11,21 +11,27 @@ public class MyMazeGenerator extends AMazeGenerator{
     private int columns;
     private double how_full; // we ended to generate complex
 
+    /**
+     * @param rows
+     * @param columns
+     * @return a 3D maze with at least one path for a solution
+     * @throws Exception
+     */
     @Override
     public Maze generate(int rows, int columns) throws Exception {
         this.rows = rows;
         this.columns = columns;
-        how_full = 1;
+        how_full = 1;// a variable that represent the value of the "complexity"\"fullness" of the maze generated
         int r;
         int c;
-        int count; // how fill the maze is
+        int count; // counts the "0"'s (non walls cells) that the maze generates
         Maze M;
         do{
             how_full -= 0.1;
             count=0;
             M = new Maze(rows,columns);
             int[][] m = M.getMaze();
-            allNumGenerateor(M, 1); // start with all one's
+            allNumGenerateor(M, 1); //generates a maze and fill it with walls only.
             s.push(new Position(0,0));
             Position curr = s.peek(); // start from the starting position
             ArrayList<Position> neighbors;
@@ -33,21 +39,25 @@ public class MyMazeGenerator extends AMazeGenerator{
                 r = curr.getRowIndex();
                 c = curr.getColumnIndex();
                 m[r][c] = 1;
-                // check all the available path we can take
-                neighbors = findNeighbors(curr,M);
-                m[r][c] = 0;
+                neighbors = findNeighbors(curr,M);//finds all the possible positions that the maze can expend into.
+                m[r][c] = 0;//sets the current position as path
                 // chose only one path
                 randomlyAddCellToStack(neighbors);
                 count++;
                 curr = s.pop();
             } while (!s.empty() && !(endPoint(r, c, M)));
             s.clear();
-        }while(count < rows*columns*how_full || !endPoint(r, c, M)); // we we ended the generate but we didn't got to the end
+        }while(count < rows*columns*how_full || !endPoint(r, c, M)); //if the maze is not "complex" enough make a new one
         M.getMaze()[rows-1][columns-1]=0;
         return M;
 
     }
 
+    /**
+     * @param pos current position
+     * @param M a maze
+     * @return a list of all the positions that a state can expend into.
+     */
     private ArrayList<Position> findNeighbors(Position pos,Maze M) {
         // return a list with all the possible paths
         ArrayList<Position> neighbors = new ArrayList<>();
@@ -74,15 +84,26 @@ public class MyMazeGenerator extends AMazeGenerator{
         return neighbors;
     }
 
+    /**
+     * @param r Row
+     * @param c Column
+     * @return if the position coordinates is within the maze borders
+     */
     private Boolean validPos(int r, int c){
         // if the point is in the maze
         return c >= 0 && c < columns && r >= 0 && r < rows;
     }
 
+    /**
+     * @param r Row
+     * @param c Column
+     * @param M a 3D maze
+     * @return if a move into a neighbor cell is valid
+     */
     private Boolean validMov(int r, int c, Maze M){
         // if the position neighbors is not 0
         int[][] m = M.getMaze();
-        boolean flag;
+        boolean flag; // a variable that checks if the neighbor cell being expended into is surrounded with walls
 
         flag = m[r][c] == 1;
         if(validPos(r-1, c))
@@ -97,6 +118,12 @@ public class MyMazeGenerator extends AMazeGenerator{
         return flag;
     }
 
+    /**
+     * @param r Row
+     * @param c Column
+     * @param M a 3D maze
+     * @return if the current current position is the Goal position or one step near it
+     */
     private boolean endPoint(int r, int c,Maze M){
         // if we got to the end point or one step near it
         Position endPos = M.getGoalPosition();
@@ -113,6 +140,9 @@ public class MyMazeGenerator extends AMazeGenerator{
         return flag;
     }
 
+    /**randomly Adds Cells To Stack of positions
+     * @param cells list of positions
+     */
     private void randomlyAddCellToStack(ArrayList<Position> cells) {
         // chose random paths from list of paths
         if(cells.isEmpty())

@@ -14,10 +14,13 @@ public class SimpleMazeGenerator extends AMazeGenerator{
 
     }
 
+    /** generates one random path in the maze
+     * @param Sm a maze
+     */
     private void onePathGenerateor(Maze Sm){
         int randNum;
 
-        allNumGenerateor(Sm, 1); // start with all one's
+        allNumGenerateor(Sm, 1); //generates a maze and fill it with walls only.
 
         int r=0;
         int c=0;
@@ -40,6 +43,9 @@ public class SimpleMazeGenerator extends AMazeGenerator{
 
     }
 
+    /**randomly Adds Zeros (paths) in the maze
+     * @param Sm a maze
+     */
     private void randomlyAddZeros(Maze Sm){
         int randNum;
         for (int i = 0; i < Sm.getRows(); i++) {
