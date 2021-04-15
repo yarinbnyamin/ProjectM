@@ -1,9 +1,7 @@
 package algorithms.maze3D;
 
-import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.ISearchable;
-import algorithms.search.MazeState;
 
 import java.util.ArrayList;
 
@@ -38,7 +36,6 @@ public class SearchableMaze3D implements ISearchable {
         ArrayList<Position3D> successorsPositions = mazeState.getNeighbors();
         for (Position3D pos : successorsPositions) {
             successorState = new Maze3DState(s, maze, pos);
-            successorState.setCost(s.getCost()+1);
             successors.add(successorState);
         }
         return successors;
