@@ -80,7 +80,7 @@ class BestFirstSearchTest {
     }
 
 
-    /**checks that the BestFirstSearch algorithm fineds a solution to a 1000X1000 maze in under 1 min
+    /**checks that the BestFirstSearch algorithm finds a solution to a 1000X1000 maze in under 1 min
      * @throws Exception
      */
     @Test
@@ -95,25 +95,21 @@ class BestFirstSearchTest {
         assertTrue(TimeUnit.NANOSECONDS.toMillis(end_time-start_time) < 60000);
     }
 
-    /*
-    @Test // fix
+
+    /**checks that the BestFirstSearch algorithm take the lowest cost path
+     * @throws Exception
+     */
+    @Test
     void lowCost() throws Exception {
 
         mg = new EmptyMazeGenerator();
-        Maze maze = mg.generate(4, 4);
-        maze.getMaze()[1][2] = 1;
-        maze.getMaze()[1][3] = 1;
-        maze.getMaze()[2][3] = 1;
-        maze.getMaze()[2][0] = 1;
-        maze.getMaze()[3][0] = 1;
-        maze.getMaze()[3][1] = 1;
-        //maze.setGoalPosition(new Position(2,4));
+        Maze maze = mg.generate(2, 6);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
-        Solution solution = best.solve((ISearchable) searchableMaze);
+        Solution solution = best.solve(searchableMaze);
         ArrayList<AState> solutionPath = solution.getSolutionPath();
-        assertEquals("{0,0}", solutionPath.get(0).toString());
+        assertEquals(4+Math.sqrt(2), solutionPath.get(solutionPath.size()-1).getCost());
 
     }
-    */
+
 
 }
