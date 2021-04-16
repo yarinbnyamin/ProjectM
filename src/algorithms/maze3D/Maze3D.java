@@ -1,6 +1,5 @@
 package algorithms.maze3D;
 
-import algorithms.mazeGenerators.Position;
 
 public class Maze3D {
     private int columns;
@@ -59,6 +58,7 @@ public class Maze3D {
         b.append("}");
         System.out.println(b);
     }
+
     public int getColumns() {
         return columns;
     }

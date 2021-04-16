@@ -7,14 +7,7 @@ import java.util.ArrayList;
 public class Maze3DState extends AState {
     private Maze3D maze;
     Position3D pos;
-    /*
-    public Maze3DState(AState cameFrom, Maze3D maze) {
-        super(cameFrom);
-        this.maze = maze;
-        this.pos = maze.getStartPosition();
-        state = pos.toString();
-    }
-    */
+
     public Maze3DState(AState cameFrom, Maze3D maze, Position3D pos) {
         super(cameFrom);
         this.maze = maze;
@@ -23,6 +16,8 @@ public class Maze3DState extends AState {
 
         if(cameFrom != null)
             cost = cameFrom.getCost() + 1;
+        else
+            cost = 0;
 
     }
 

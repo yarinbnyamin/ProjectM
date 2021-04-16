@@ -1,6 +1,6 @@
 package test;
 
-import algorithms.maze3D.IMazeGenerator3D;
+import algorithms.maze3D.IMaze3DGenerator;
 import algorithms.maze3D.Maze3D;
 import algorithms.maze3D.MyMaze3DGenerator;
 import algorithms.maze3D.SearchableMaze3D;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class RunSearchOnMaze3D {
     public static void main(String[] args) throws Exception {
-        IMazeGenerator3D mg = new MyMaze3DGenerator();
-        Maze3D maze = mg.generate(2, 4,4);
+        IMaze3DGenerator mg = new MyMaze3DGenerator();
+        Maze3D maze = mg.generate(2, 2,4);
         maze.print();
         SearchableMaze3D searchableMaze = new SearchableMaze3D(maze);
         solveProblem(searchableMaze, new BreadthFirstSearch());
@@ -23,7 +23,6 @@ public class RunSearchOnMaze3D {
     }
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {
         //Solve a searching problem with a searcher
-        //((SearchableMaze)domain).getMaze().print(); // delete
         Solution solution = searcher.solve(domain);
         System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
         //Printing Solution Path

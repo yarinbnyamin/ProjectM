@@ -4,7 +4,7 @@ import algorithms.mazeGenerators.Maze;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class AMaze3DGenerator implements IMazeGenerator3D {
+public abstract class AMaze3DGenerator implements IMaze3DGenerator {
     public abstract Maze3D generate(int depth, int row, int column) throws Exception;
 
     public long measureAlgorithmTimeMillis(int depth, int rows, int columns) throws Exception {

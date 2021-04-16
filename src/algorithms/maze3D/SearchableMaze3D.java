@@ -14,9 +14,7 @@ public class SearchableMaze3D implements ISearchable {
 
     @Override
     public AState getStartState() {
-        Maze3DState state = new Maze3DState(null,maze,maze.getStartPosition());
-        state.setCost(0);
-        return state;
+        return new Maze3DState(null,maze,maze.getStartPosition());
     }
 
     @Override
