@@ -10,7 +10,4 @@ public class BestFirstSearch extends BreadthFirstSearch{
         openList = new PriorityQueue<>();
     }
 
-    public Solution solve(ISearchable s) {
-        return super.solve(s);
-    }
 }

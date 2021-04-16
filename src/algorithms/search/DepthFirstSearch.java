@@ -12,6 +12,10 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
         openList = new Stack<>();
     }
 
+    /**
+     * @param s searchable
+     * @return solution of this searchable
+     */
     @Override
     public Solution solve(ISearchable s) {
         AState sol = null;

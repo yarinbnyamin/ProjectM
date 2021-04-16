@@ -13,10 +13,14 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
         closeList = new HashMap<>();
     }
 
+    /**
+     * @param goalState the last state of the maze
+     * @return back track from the start as Solution
+     */
     protected Solution backtrackSol(AState goalState){
         Solution sol=new Solution();
         AState preState =goalState;
-        while (preState != null) {
+        while (preState != null) { // pass all the state in the path
             sol.addStateToTop(preState);
             preState=preState.getCameFrom();
         }

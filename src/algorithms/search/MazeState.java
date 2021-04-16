@@ -9,35 +9,31 @@ public class MazeState extends AState{
     private Maze maze;
     Position pos;
 
-    /*
-    public MazeState(AState cameFrom, Maze maze) {
-        super(cameFrom);
-        this.maze = maze;
-        this.pos = maze.getStartPosition();
-        state = pos.toString();
-    }
-    */
-
     public MazeState(AState cameFrom, Maze maze, Position pos) {
         super(cameFrom);
         this.maze = maze;
         this.pos = pos;
         state = pos.toString();
-        if(cameFrom != null) {
+        if(cameFrom != null) { // set the cost of the state
             if (isDiagonal(((MazeState) cameFrom).getPos(), pos))
-                cost = cameFrom.getCost() + Math.sqrt(2); // Math.sqrt(2)
+                cost = cameFrom.getCost() + Math.sqrt(2);
             else
                 cost = cameFrom.getCost() + 1;
+        }else{
+            cost = 0;
         }
     }
 
+    /**
+     * @return all the valid neighbors of the this maze state
+     */
     public ArrayList<Position> getNeighbors() {
 
         int[][] m = maze.getMaze();
         ArrayList<Position> posList = new ArrayList<>();
         int r = pos.getRowIndex(), c = pos.getColumnIndex();
 
-        // clock wize :
+        // check all the valid neighbors
         if(validPos(r-1, c) && m[r-1][c] == 0)
             posList.add(new Position(r-1,c));
         if(validPos(r-1, c+1) && m[r-1][c+1] == 0 && (m[r-1][c] == 0 || m[r][c+1] == 0))
@@ -64,6 +60,12 @@ public class MazeState extends AState{
         return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows();
     }
 
+
+    /**
+     * @param from the position we came from
+     * @param to the position we go to
+     * @return if the move is diagonal move
+     */
     private boolean isDiagonal(Position from, Position to){
         int Rfrom = from.getRowIndex();
         int Cfrom = from.getColumnIndex();

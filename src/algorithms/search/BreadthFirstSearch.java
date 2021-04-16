@@ -13,6 +13,10 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         openList = new LinkedList<>();
     }
 
+    /**
+     * @param s searchable
+     * @return solution of this searchable
+     */
     @Override
     public Solution solve(ISearchable s) {
         AState sol = null;
@@ -36,7 +40,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
             }
         }
 
-        if(sol == null)
+        if(sol == null) // error + test
             return null;
         return backtrackSol(sol);
     }

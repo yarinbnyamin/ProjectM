@@ -18,7 +18,7 @@ public abstract class AState implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) { // here or on mazestate ?
+    public int compareTo(Object o) { // compare in priority list
         AState other_state = (AState) o;
         return Double.compare(cost, other_state.getCost());
     }
