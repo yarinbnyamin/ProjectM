@@ -18,7 +18,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
      * @return solution of this searchable
      */
     @Override
-    public Solution solve(ISearchable s) {
+    public Solution solve(ISearchable s) throws Exception {
         AState sol = null;
         openList.add(s.getStartState());
         closeList.put(s.getStartState().hashCode(),s.getStartState());
@@ -26,22 +26,26 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         {
             AState current = openList.poll();
             visitedNodes++;
+
+            // check if got to the end
             if (current.equals(s.getGoalState())){
                 sol = current;
                 break;
             }
 
+            // get all the possible moves from this state
             for (AState neighbor : s.getAllSuccessors(current))
             {
-                if(closeList.containsKey(neighbor.hashCode()))
+                if(closeList.containsKey(neighbor.hashCode())) // if all ready was in this state
                     continue;
                 closeList.put(neighbor.hashCode(),neighbor);
                 openList.add(neighbor);
             }
         }
 
-        if(sol == null) // error + test
-            return null;
+        if(sol == null) // we pass all the possible moves and didn't got a solution
+            throw new Exception("no solution");
+
         return backtrackSol(sol);
     }
 

@@ -39,9 +39,15 @@ class BestFirstSearchTest {
         maze.getMaze()[0][1] = 1;
         maze.getMaze()[1][0] = 1;
         maze.getMaze()[1][1] = 1;
+
         SearchableMaze searchableMaze = new SearchableMaze(maze);
-        Solution solution = best.solve(searchableMaze);
-        assertNull(solution);//the solution should return null because there is no solution path
+        try{
+            best.solve(searchableMaze);
+            assertTrue(false);
+        }catch (Exception e){
+            assertTrue(true);
+        }
+
     }
 
     /** checks in a specific maze if the path do not go throw a wall for a diagonal shorter path
