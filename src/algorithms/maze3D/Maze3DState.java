@@ -31,30 +31,19 @@ public class Maze3DState extends AState {
         int r = pos.getRowIndex(), c = pos.getColumnIndex(), d = pos.getDepthIndex();
 
         //checks all possible neighbors of a position for a path :
-        if(validPos(d,r-1, c) && m[d][r-1][c] == 0)
+        if(maze.validPos(d,r-1, c) && m[d][r-1][c] == 0)
             posList.add(new Position3D(d,r-1,c));
-        if(validPos(d,r, c+1) && m[d][r][c+1] == 0)
+        if(maze.validPos(d,r, c+1) && m[d][r][c+1] == 0)
             posList.add(new Position3D(d,r,c+1));
-        if(validPos(d,r+1, c) && m[d][r+1][c] == 0)
+        if(maze.validPos(d,r+1, c) && m[d][r+1][c] == 0)
             posList.add(new Position3D(d,r+1,c));
-        if(validPos(d,r, c-1) && m[d][r][c-1] == 0)
+        if(maze.validPos(d,r, c-1) && m[d][r][c-1] == 0)
             posList.add(new Position3D(d,r,c-1));
-        if(validPos(d+1,r, c) && m[d+1][r][c] == 0)
+        if(maze.validPos(d+1,r, c) && m[d+1][r][c] == 0)
             posList.add(new Position3D(d+1,r,c));
-        if(validPos(d-1,r, c) && m[d-1][r][c] == 0)
+        if(maze.validPos(d-1,r, c) && m[d-1][r][c] == 0)
             posList.add(new Position3D(d-1,r,c));
         return  posList;
-    }
-
-    /** checks that a positions coordinates are within the maze borders
-     * @param d Depth
-     * @param r Row
-     * @param c Column
-     * @return if the position coordinates is within the maze borders
-     */
-    private Boolean validPos(int d, int r,int c){
-        // if the point is in the maze
-        return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows() && d>=0 && d<maze.getDepth();
     }
 
     public Maze3D getMaze() {

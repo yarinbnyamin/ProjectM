@@ -34,30 +34,25 @@ public class MazeState extends AState{
         int r = pos.getRowIndex(), c = pos.getColumnIndex();
 
         // check all the valid neighbors
-        if(validPos(r-1, c) && m[r-1][c] == 0)
+        if(maze.validPos(r-1, c) && m[r-1][c] == 0)
             posList.add(new Position(r-1,c));
-        if(validPos(r-1, c+1) && m[r-1][c+1] == 0 && (m[r-1][c] == 0 || m[r][c+1] == 0))
+        if(maze.validPos(r-1, c+1) && m[r-1][c+1] == 0 && (m[r-1][c] == 0 || m[r][c+1] == 0))
             posList.add(new Position(r-1,c+1));
-        if(validPos(r, c+1) && m[r][c+1] == 0)
+        if(maze.validPos(r, c+1) && m[r][c+1] == 0)
             posList.add(new Position(r,c+1));
-        if(validPos(r+1, c+1) && m[r+1][c+1] == 0 && (m[r+1][c] == 0 || m[r][c+1] == 0))
+        if(maze.validPos(r+1, c+1) && m[r+1][c+1] == 0 && (m[r+1][c] == 0 || m[r][c+1] == 0))
             posList.add(new Position(r+1,c+1));
-        if(validPos(r+1, c) && m[r+1][c] == 0)
+        if(maze.validPos(r+1, c) && m[r+1][c] == 0)
             posList.add(new Position(r+1,c));
-        if(validPos(r+1, c-1) && m[r+1][c-1] == 0 && (m[r+1][c] == 0 || m[r][c-1] == 0))
+        if(maze.validPos(r+1, c-1) && m[r+1][c-1] == 0 && (m[r+1][c] == 0 || m[r][c-1] == 0))
             posList.add(new Position(r+1,c-1));
-        if(validPos(r, c-1) && m[r][c-1] == 0)
+        if(maze.validPos(r, c-1) && m[r][c-1] == 0)
             posList.add(new Position(r,c-1));
-        if(validPos(r-1, c-1) && m[r-1][c-1] == 0 && (m[r-1][c] == 0 || m[r][c-1] == 0))
+        if(maze.validPos(r-1, c-1) && m[r-1][c-1] == 0 && (m[r-1][c] == 0 || m[r][c-1] == 0))
             posList.add(new Position(r-1,c-1));
 
 
         return  posList;
-    }
-
-    private Boolean validPos(int r, int c){
-        // if the point is in the maze
-        return c >= 0 && c < maze.getColumns() && r >= 0 && r < maze.getRows();
     }
 
 

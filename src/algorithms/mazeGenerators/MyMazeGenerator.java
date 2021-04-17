@@ -7,8 +7,6 @@ import java.util.Stack;
 public class MyMazeGenerator extends AMazeGenerator{
     private Stack<Position> s = new Stack<>(); // the path we pass
     private Random rand = new Random();
-    private int rows;
-    private int columns;
     private double how_full; // we ended to generate complex
 
     /**
@@ -19,8 +17,6 @@ public class MyMazeGenerator extends AMazeGenerator{
      */
     @Override
     public Maze generate(int rows, int columns) throws Exception {
-        this.rows = rows;
-        this.columns = columns;
         how_full = 1;// a variable that represent the value of the "complexity"\"fullness" of the maze generated
         int r;
         int c;
@@ -65,33 +61,23 @@ public class MyMazeGenerator extends AMazeGenerator{
         int c = pos.getColumnIndex();
         int r = pos.getRowIndex();
 
-        if(validPos(r-1, c) && validMov(r-1, c, M)){
+        if(M.validPos(r-1, c) && validMov(r-1, c, M)){
             neighbors.add(new Position(r-1, c));
         }
 
-        if(validPos(r, c-1) && validMov(r, c-1, M)){
+        if(M.validPos(r, c-1) && validMov(r, c-1, M)){
             neighbors.add(new Position(r, c-1));
         }
 
-        if(validPos(r+1, c) && validMov(r+1, c, M)){
+        if(M.validPos(r+1, c) && validMov(r+1, c, M)){
             neighbors.add(new Position(r+1, c));
         }
 
-        if(validPos(r, c+1) && validMov(r, c+1, M)){
+        if(M.validPos(r, c+1) && validMov(r, c+1, M)){
             neighbors.add(new Position(r, c+1));
         }
 
         return neighbors;
-    }
-
-    /**
-     * @param r Row
-     * @param c Column
-     * @return if the position coordinates is within the maze borders
-     */
-    private Boolean validPos(int r, int c){
-        // if the point is in the maze
-        return c >= 0 && c < columns && r >= 0 && r < rows;
     }
 
     /**
@@ -106,13 +92,13 @@ public class MyMazeGenerator extends AMazeGenerator{
         boolean flag; // a variable that checks if the neighbor cell being expended into is surrounded with walls
 
         flag = m[r][c] == 1;
-        if(validPos(r-1, c))
+        if(M.validPos(r-1, c))
             flag = flag && (m[r-1][c] == 1);
-        if(validPos(r+1, c))
+        if(M.validPos(r+1, c))
             flag = flag && (m[r+1][c] == 1);
-        if(validPos(r, c-1))
+        if(M.validPos(r, c-1))
             flag = flag && (m[r][c-1] == 1);
-        if(validPos(r, c+1))
+        if(M.validPos(r, c+1))
             flag = flag && (m[r][c+1] == 1);
 
         return flag;
@@ -134,8 +120,6 @@ public class MyMazeGenerator extends AMazeGenerator{
         flag = ((r == rE) && (c == cE));
         flag = flag || ((r+1 == rE) && (c == cE));
         flag = flag || ((r == rE) && (c+1 == cE));
-        //flag = flag || (r-1 == rE) && (c == cE);
-        //flag = flag || (r == rE) && (c-1== cE);
 
         return flag;
     }

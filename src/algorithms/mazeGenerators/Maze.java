@@ -50,6 +50,16 @@ public class Maze {
 
     }
 
+    /**
+     * @param r Row
+     * @param c Column
+     * @return if the position coordinates is within the maze borders
+     */
+    public Boolean validPos(int r, int c){
+        // if the point is in the maze
+        return c >= 0 && c < columns && r >= 0 && r < rows;
+    }
+
     public int[][] getMaze() {
         return maze;
     }

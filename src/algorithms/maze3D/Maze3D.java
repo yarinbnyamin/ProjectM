@@ -59,6 +59,17 @@ public class Maze3D {
         System.out.println(b);
     }
 
+    /** checks that a positions coordinates are within the maze borders
+     * @param d Depth
+     * @param r Row
+     * @param c Column
+     * @return if the position coordinates is within the maze borders
+     */
+    public Boolean validPos(int d, int r,int c){
+        // if the point is in the maze
+        return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<depth;
+    }
+
     public int getColumns() {
         return columns;
     }

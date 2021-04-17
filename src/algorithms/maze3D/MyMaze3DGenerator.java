@@ -7,9 +7,6 @@ import java.util.Stack;
 public class MyMaze3DGenerator extends AMaze3DGenerator{
     private Stack<Position3D> s = new Stack<>();
     private Random rand = new Random();
-    private int rows;
-    private int columns;
-    private  int depths;
     private double how_full; // we ended to generate complex
 
     /**
@@ -21,9 +18,6 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
      */
     @Override
     public Maze3D generate(int depth, int row, int column) throws Exception{
-        this.rows = row;
-        this.columns = column;
-        this.depths=depth;
         how_full = 1;// a variable that represent the value of the "complexity"\"fullness" of the maze generated
         int r;
         int c;
@@ -33,7 +27,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         do {
             how_full -= 0.1;
             count=0;
-            m3d=new Maze3D(depths,rows,columns);
+            m3d=new Maze3D(depth,row,column);
             int[][][] m = m3d.getMap();
             allNumGenerateor(m3d, 1);//generates a maze and fill it with walls only.
             s.push(new Position3D(0,0,0));
@@ -51,8 +45,8 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
                 curr = s.pop();
             }while (!s.empty() && !(endPoint(d,r, c,m3d)));
             s.clear();
-        }while(count < rows*columns*depths*how_full || !endPoint(d, r, c, m3d));//if the maze is not "complex" enough make a new one
-        m3d.getMap()[depths-1][rows-1][columns-1]=0;
+        }while(count < row*column*depth*how_full || !endPoint(d, r, c, m3d));//if the maze is not "complex" enough make a new one
+        m3d.getMap()[depth-1][row-1][column-1]=0;
         return m3d;
     }
 
@@ -69,25 +63,25 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         int r = pos.getRowIndex();
         int d = pos.getDepthIndex();
 
-        if(validPos(d,r-1, c) && validMov(d,r-1, c, M)){
+        if(M.validPos(d,r-1, c) && validMov(d,r-1, c, M)){
             neighbors.add(new Position3D(d,r-1, c));
         }
 
-        if(validPos(d,r, c-1) && validMov(d,r, c-1, M)){
+        if(M.validPos(d,r, c-1) && validMov(d,r, c-1, M)){
             neighbors.add(new Position3D(d,r, c-1));
         }
 
-        if(validPos(d,r+1, c) && validMov(d,r+1, c, M)){
+        if(M.validPos(d,r+1, c) && validMov(d,r+1, c, M)){
             neighbors.add(new Position3D(d,r+1, c));
         }
 
-        if(validPos(d,r, c+1) && validMov(d,r, c+1, M)){
+        if(M.validPos(d,r, c+1) && validMov(d,r, c+1, M)){
             neighbors.add(new Position3D(d,r, c+1));
         }
-        if(validPos(d+1,r, c) && validMov(d+1,r, c, M)){
+        if(M.validPos(d+1,r, c) && validMov(d+1,r, c, M)){
             neighbors.add(new Position3D(d+1,r, c));
         }
-        if(validPos(d-1,r, c) && validMov(d-1,r, c, M)){
+        if(M.validPos(d-1,r, c) && validMov(d-1,r, c, M)){
             neighbors.add(new Position3D(d-1,r, c));
         }
         return neighbors;
@@ -105,29 +99,19 @@ public class MyMaze3DGenerator extends AMaze3DGenerator{
         int[][][] m = M.getMap();
         boolean flag; // a variable that checks if the neighbor cell being expended into is surrounded with walls
         flag = m[d][r][c] == 1;
-        if(validPos(d,r-1, c))
+        if(M.validPos(d,r-1, c))
             flag = flag && (m[d][r-1][c] == 1);
-        if(validPos(d,r+1, c))
+        if(M.validPos(d,r+1, c))
             flag = flag && (m[d][r+1][c] == 1);
-        if(validPos(d,r, c-1))
+        if(M.validPos(d,r, c-1))
             flag = flag && (m[d][r][c-1] == 1);
-        if(validPos(d,r, c+1))
+        if(M.validPos(d,r, c+1))
             flag = flag && (m[d][r][c+1] == 1);
-        if (validPos(d+1,r,c))
+        if (M.validPos(d+1,r,c))
             flag = flag && (m[d+1][r][c] == 1);
-        if (validPos(d-1,r,c))
+        if (M.validPos(d-1,r,c))
             flag = flag && (m[d-1][r][c] == 1);
         return flag;
-    }
-    /** checks that a positions coordinates are within the maze borders ********** delete(?)
-     * @param d Depth
-     * @param r Row
-     * @param c Column
-     * @return if the position coordinates is within the maze borders
-     */
-    private Boolean validPos(int d, int r,int c){
-        // if the point is in the maze
-        return c >= 0 && c < columns && r >= 0 && r < rows && d>=0 && d<depths;
     }
 
     /**randomly Adds Cells To Stack of positions
