@@ -30,7 +30,7 @@ public class Maze {
         int CurrentCell = 12;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
-                maze[rows][columns]=info[CurrentCell];
+                maze[row][col]=info[CurrentCell];
                 CurrentCell++;
             }
         }
