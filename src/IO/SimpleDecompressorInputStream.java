@@ -32,12 +32,10 @@ public class SimpleDecompressorInputStream extends MyDecompressorInputStream {
                 continue;
             }
             */
-
             for (int j = 0; j < count; j++) {
                 b[pos] = num;
                 pos++;
             }
-
             if(num == 1)
                 num = 0;
             else

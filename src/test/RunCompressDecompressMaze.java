@@ -15,14 +15,14 @@ public class RunCompressDecompressMaze {
         Maze maze = mazeGenerator.generate(100, 100); //Generate new maze
         try {
 // save maze to a file
-            OutputStream out = new SimpleCompressorOutputStream(new FileOutputStream(mazeFileName));
+            OutputStream out = new MyCompressorOutputStream(new FileOutputStream(mazeFileName));
             out.write(maze.toByteArray()); out.flush();
             out.close();
         } catch (IOException e) { e.printStackTrace();
         }
         byte savedMazeBytes[] = new byte[0]; try {
 //read maze from file
-            InputStream in = new SimpleDecompressorInputStream(new
+            InputStream in = new MyDecompressorInputStream(new
                     FileInputStream(mazeFileName));
             savedMazeBytes = new byte[maze.toByteArray().length]; in.read(savedMazeBytes);
             in.close();
