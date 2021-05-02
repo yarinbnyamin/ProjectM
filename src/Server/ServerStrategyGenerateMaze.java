@@ -1,13 +1,11 @@
 package Server;
 
-import IO.SimpleCompressorOutputStream;
+import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+
+import java.io.*;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy{
     @Override
@@ -15,13 +13,13 @@ public class ServerStrategyGenerateMaze implements IServerStrategy{
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
-
             int[] mazeDimensions = (int[]) fromClient.readObject();
             IMazeGenerator generator = new MyMazeGenerator();
             Maze maze = generator.generate(mazeDimensions[0], mazeDimensions[1]);
-            SimpleCompressorOutputStream compressorOutputStream = new SimpleCompressorOutputStream(toClient); // change to my
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            MyCompressorOutputStream compressorOutputStream = new MyCompressorOutputStream(out);
             compressorOutputStream.write(maze.toByteArray());
-            //toClient.writeObject(compressorOutputStream);
+            toClient.writeObject(out.toByteArray());
             toClient.flush();
 
             fromClient.close();
