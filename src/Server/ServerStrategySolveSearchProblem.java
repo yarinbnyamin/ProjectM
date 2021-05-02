@@ -1,9 +1,6 @@
 package Server;
 
-import IO.SimpleCompressorOutputStream;
-import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.*;
 
 import java.io.InputStream;
@@ -20,16 +17,9 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
             Maze maze = (Maze) fromClient.readObject();
 
-
-
             ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
             ISearchable searchableMaze = new SearchableMaze(maze);
             Solution sol = searchingAlgorithm.solve(searchableMaze);
-
-            //String tempDirectoryPath = System.getProperty("java.io.tmpdir");
-
-            //SimpleCompressorOutputStream compressorOutputStream = new SimpleCompressorOutputStream(toClient); // change to my
-            //compressorOutputStream.write(sol);
 
             toClient.writeObject(sol);
             toClient.flush();
