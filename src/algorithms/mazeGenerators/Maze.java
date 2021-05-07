@@ -1,6 +1,8 @@
 package algorithms.mazeGenerators;
 
-public class Maze {
+import java.io.*;
+
+public class Maze implements Serializable {
     private int columns;
     private int rows;
     private Position start_position;
@@ -19,52 +21,12 @@ public class Maze {
         this.end_position = new Position(rows-1,columns-1);
     }
 
-    public Maze(byte[] info) {
-        this.rows = info[0]*256 + info[1] ;
-        this.columns = info[2]*256 +info[3];
-        this.maze = new int[rows][columns];
-        Position startPos = new Position(info[4] * 256 + info[5], info[6] * 256 + info[7]);
-        Position GoalPos = new Position(info[8] * 256 +info[9], info[10] * 256 + info[11]);
-        setStartPosition(startPos);
-        setGoalPosition(GoalPos);
-        int CurrentCell = 12;
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < columns; col++) {
-                maze[row][col]=info[CurrentCell];
-                CurrentCell++;
-            }
-        }
+    public Maze(byte[] info){
+        byteToMaze(info);
     }
 
     public void print(){
-        boolean found_start= false;
-        boolean found_goal= false;
-        StringBuilder b = new StringBuilder();
-        for (int i = 0; i < rows; i++) {
-            b.append("{ ");
-            for (int j = 0; j < columns; j++) {
-                if (!found_start){
-                    if(start_position.getRowIndex() == i && start_position.getColumnIndex() == j) {
-                        b.append("S ");
-                        found_start = true;
-                        continue;
-                    }
-                }
-                else if(!found_goal){
-                    if(end_position.getRowIndex() == i && end_position.getColumnIndex() == j) {
-                        b.append("E ");
-                        found_goal = true;
-                        continue;
-                    }
-                }
-                b.append(maze[i][j]+" ");
-
-            }
-            b.append("}\n");
-        }
-        b.delete(b.length()-1,b.length());
-        System.out.println(b);
-
+        System.out.println(toString());
     }
 
     /**
@@ -101,6 +63,63 @@ public class Maze {
         return byteMazeInfo;
     }
 
+    @Serial
+    private void writeObject(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(toByteArray());
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        byte[] info = (byte[])stream.readObject();
+        byteToMaze(info);
+    }
+
+    private void byteToMaze(byte[] info){
+        this.rows = info[0]*256 + info[1] ;
+        this.columns = info[2]*256 +info[3];
+        this.maze = new int[rows][columns];
+        Position startPos = new Position(info[4] * 256 + info[5], info[6] * 256 + info[7]);
+        Position GoalPos = new Position(info[8] * 256 +info[9], info[10] * 256 + info[11]);
+        setStartPosition(startPos);
+        setGoalPosition(GoalPos);
+        int CurrentCell = 12;
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                maze[row][col]=info[CurrentCell];
+                CurrentCell++;
+            }
+        }
+    }
+
+    public String toString() {
+        boolean found_start= false;
+        boolean found_goal= false;
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < rows; i++) {
+            b.append("{ ");
+            for (int j = 0; j < columns; j++) {
+                if (!found_start){
+                    if(start_position.getRowIndex() == i && start_position.getColumnIndex() == j) {
+                        b.append("S ");
+                        found_start = true;
+                        continue;
+                    }
+                }
+                else if(!found_goal){
+                    if(end_position.getRowIndex() == i && end_position.getColumnIndex() == j) {
+                        b.append("E ");
+                        found_goal = true;
+                        continue;
+                    }
+                }
+                b.append(maze[i][j]+" ");
+
+            }
+            b.append("}\n");
+        }
+        b.delete(b.length()-1,b.length());
+        return b.toString();
+    }
 
     public int[][] getMaze() {
         return maze;

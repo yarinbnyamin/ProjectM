@@ -1,8 +1,11 @@
 package algorithms.search;
 
+import algorithms.mazeGenerators.Position;
+
+import java.io.*;
 import java.util.ArrayList;
 
-public class Solution {
+public class Solution implements Serializable {
     private ArrayList<AState> solPath;
 
     public Solution() {
@@ -11,6 +14,20 @@ public class Solution {
 
     public ArrayList<AState> getSolutionPath() {
         return solPath;
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(solPath);
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        solPath = (ArrayList) stream.readObject();
+    }
+
+    public String toString() {
+        return solPath.toString();
     }
 
     public void setSolPath(ArrayList<AState> solPath) {
