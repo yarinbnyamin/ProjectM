@@ -6,6 +6,7 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import algorithms.mazeGenerators.EmptyMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.AState;
@@ -19,22 +20,26 @@ import java.util.ArrayList;
 public class RunCommunicateWithServers {
     public static void main(String[] args) {
 //Initializing servers
-        //Server mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
+        Server mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         Server solveSearchProblemServer = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
 //Starting servers
 
-        //mazeGeneratingServer.start();
+        mazeGeneratingServer.start();
         solveSearchProblemServer.start();
 //Communicating with servers
         //CommunicateWithServer_MazeGenerating();
         CommunicateWithServer_SolveSearchProblem();
+        CommunicateWithServer_SolveSearchProblem();
+        CommunicateWithServer_SolveSearchProblem();
+        CommunicateWithServer_SolveSearchProblem();
+        CommunicateWithServer_SolveSearchProblem();
 //Stopping all servers
-    //mazeGeneratingServer.stop();
+    mazeGeneratingServer.stop();
     solveSearchProblemServer.stop();
     }
     private static void CommunicateWithServer_MazeGenerating() {
         try {
-            Client client = new Client(InetAddress.getByName("127.0.0.1"), 5400, new IClientStrategy() { // .getByName("127.0.0.1") .getLocalHost()
+            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
                         @Override
                         public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                             try {
@@ -46,7 +51,7 @@ public class RunCommunicateWithServers {
                                 toServer.flush();
                                 byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                                 InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                                byte[] decompressedMaze = new byte[3000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                                byte[] decompressedMaze = new byte[300 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                                 is.read(decompressedMaze); //Fill decompressedMaze
                                 Maze maze = new Maze(decompressedMaze); maze.print();
                             } catch (Exception e) { e.printStackTrace();
@@ -59,17 +64,26 @@ public class RunCommunicateWithServers {
     }
     private static void CommunicateWithServer_SolveSearchProblem() {
         try {
-            Client client = new Client(InetAddress.getByName("127.0.0.1"), 5401, new IClientStrategy() { // // .getByName("127.0.0.1") .getLocalHost()
+            Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
                         @Override
                         public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                             try {
                                 ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                                 ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                                 toServer.flush();
-                                MyMazeGenerator mg = new MyMazeGenerator(); Maze maze = mg.generate(50, 50); maze.print();
+                                EmptyMazeGenerator mg = new EmptyMazeGenerator(); Maze maze = mg.generate(50, 50); maze.print();
+
+
+                                long start = System.nanoTime();
+
+
                                 toServer.writeObject(maze); //send maze to server
                                 toServer.flush();
                                 Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
+
+
+                                long elapsedTime = System.nanoTime() - start;
+                                System.out.println(elapsedTime);
 
 //Print Maze Solution retrieved from the server
                                 System.out.println(String.format("Solution steps:%s", mazeSolution));
