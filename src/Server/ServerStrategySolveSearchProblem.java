@@ -13,7 +13,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
     String tempDirectoryPath = System.getProperty("java.io.tmpdir");
 
     @Override
-    public void applyStrategy(InputStream inFromClient, OutputStream outToClient) {
+    public void ServerStrategy(InputStream inFromClient, OutputStream outToClient) {
         try {
 
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
