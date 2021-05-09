@@ -2,7 +2,6 @@ package IO;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class SimpleDecompressorInputStream extends MyDecompressorInputStream {
 
@@ -26,12 +25,7 @@ public class SimpleDecompressorInputStream extends MyDecompressorInputStream {
         int count;
         for (int i = 12; i < b.length; i++) {
             count = read();
-            /*
-            if(count == 0) {
-                i -= 2;
-                continue;
-            }
-            */
+
             for (int j = 0; j < count; j++) {
                 b[pos] = num;
                 pos++;

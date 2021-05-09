@@ -29,6 +29,7 @@ public class SimpleCompressorOutputStream extends MyCompressorOutputStream {
                     sum++;
                 }else{
                     write(sum);
+                    write(0);
                     sum = 1;
                 }
             }else{

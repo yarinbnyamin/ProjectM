@@ -42,7 +42,7 @@ public class Maze implements Serializable {
     public byte[] toByteArray() {
         byte[] byteMazeInfo = new byte[12 + rows * columns];
         byteMazeInfo[0] = (byte)(this.rows / 256);
-        byteMazeInfo[1] = (byte)(this.rows % 256);
+        byteMazeInfo[1] = (byte) (this.rows % 256);
         byteMazeInfo[2] = (byte)(this.columns / 256);
         byteMazeInfo[3] = (byte)(this.columns % 256);
         byteMazeInfo[4] = (byte)(this.start_position.getRowIndex() / 256);
@@ -75,11 +75,11 @@ public class Maze implements Serializable {
     }
 
     private void byteToMaze(byte[] info){
-        this.rows = info[0]*256 + info[1] ;
-        this.columns = info[2]*256 +info[3];
+        this.rows = info[0]*256 + (info[1] & 0xFF);
+        this.columns = info[2]*256 + (info[3] & 0xFF);
         this.maze = new int[rows][columns];
-        Position startPos = new Position(info[4] * 256 + info[5], info[6] * 256 + info[7]);
-        Position GoalPos = new Position(info[8] * 256 +info[9], info[10] * 256 + info[11]);
+        Position startPos = new Position(info[4] * 256 + (info[5] & 0xFF), info[6] * 256 + (info[7] & 0xFF));
+        Position GoalPos = new Position(info[8] * 256 + (info[9] & 0xFF), info[10] * 256 + (info[11] & 0xFF));
         setStartPosition(startPos);
         setGoalPosition(GoalPos);
         int CurrentCell = 12;
@@ -89,6 +89,7 @@ public class Maze implements Serializable {
                 CurrentCell++;
             }
         }
+
     }
 
     public String toString() {
