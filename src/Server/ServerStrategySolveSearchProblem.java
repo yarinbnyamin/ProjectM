@@ -1,6 +1,5 @@
 package Server;
 
-import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.*;
 
@@ -21,34 +20,33 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
             ObjectInputStream fromClient = new ObjectInputStream(inFromClient);
             ObjectOutputStream toClient = new ObjectOutputStream(outToClient);
             Maze maze = (Maze) fromClient.readObject();
+            System.out.println(maze);
             byte[] MazeByte = maze.toByteArray();
             boolean eq = false;
 
-            /*
+
             for (int i = 0; i < index && !eq; i++) {
-                //fi = new FileInputStream(new File(tempDirectoryPath + "/saved"+i+"Maze.maze"));
-                InputStream targetStream = new FileInputStream(new File(tempDirectoryPath + "/saved"+i+"Maze.maze"));
-                in = new ObjectInputStream(targetStream);
+                fi = new FileInputStream(tempDirectoryPath + "\\saved"+i+"Maze.maze");
+                in = new ObjectInputStream(fi);
                 byte[] b = (byte[]) in.readObject();
 
                 if(b[0] == MazeByte[0] && b[1] == MazeByte[1] && b[2] == MazeByte[2] && b[3] == MazeByte[3])
                     eq = Arrays.equals(MazeByte, b);
             }
-            */
-            Solution sol = null;
+
+            Solution sol;
 
             if(!eq){
                 ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
                 ISearchable searchableMaze = new SearchableMaze(maze);
                 sol = searchingAlgorithm.solve(searchableMaze);
-                OutputStream out = new MyCompressorOutputStream(new FileOutputStream(tempDirectoryPath + "/saved"+index+"Maze.maze"));
-                ObjectOutputStream o = new ObjectOutputStream(out);
+                FileOutputStream fileOut = new FileOutputStream(tempDirectoryPath + "\\saved"+index+"Maze.maze");
+                ObjectOutputStream o = new ObjectOutputStream(fileOut);
                 index++;
-                o.write(maze.toByteArray());
+                o.writeObject(maze.toByteArray());
                 o.writeObject(sol);
                 o.flush();
                 o.close();
-                out.close();
 
             }else{
                 sol = (Solution) in.readObject();
