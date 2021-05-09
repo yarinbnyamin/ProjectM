@@ -1,7 +1,6 @@
 package Server;
 
 import IO.MyCompressorOutputStream;
-import IO.MyDecompressorInputStream;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.*;
 
@@ -42,22 +41,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
                 }
 
-
-                //InputStream in = new MyDecompressorInputStream(new FileInputStream(mazeFileName));
-                //savedMazeBytes = new byte[maze.toByteArray().length]; in.read(savedMazeBytes);
-
-
-
-
-
-
-                /*
-                byte[] b = (byte[]) in.readObject();
-
-                if(b[0] == MazeByte[0] && b[1] == MazeByte[1] && b[2] == MazeByte[2] && b[3] == MazeByte[3])
-                    eq = Arrays.equals(MazeByte, b);
-
-                 */
             }
 
             Solution sol;
@@ -70,17 +53,13 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
                 ObjectOutputStream o = new ObjectOutputStream(fileOut);
                 index++;
 
-                //o.writeObject(maze.toByteArray());
                 o.writeObject(maze.getRows());
                 o.writeObject(maze.getColumns());
+
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 MyCompressorOutputStream compress = new MyCompressorOutputStream(out);
                 compress.write(maze.toByteArray());
                 o.writeObject(out.toByteArray());
-                //InputStream in = new MyDecompressorInputStream(new FileInputStream(mazeFileName));
-                //savedMazeBytes = new byte[maze.toByteArray().length]; in.read(savedMazeBytes);
-
-
 
                 o.writeObject(sol);
 
