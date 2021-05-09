@@ -66,18 +66,18 @@ public class MazeState extends AState{
      * @return if the move is diagonal move
      */
     private boolean isDiagonal(Position from, Position to){
-        int Rfrom = from.getRowIndex();
-        int Cfrom = from.getColumnIndex();
-        int Rto = to.getRowIndex();
-        int Cto = to.getColumnIndex();
+        int RowFrom = from.getRowIndex();
+        int ColFrom = from.getColumnIndex();
+        int RowTo = to.getRowIndex();
+        int ColTo = to.getColumnIndex();
 
-        if (Rfrom > Rto && Cfrom > Cto)
+        if (RowFrom > RowTo && ColFrom > ColTo)
             return true;
-        if (Rfrom > Rto && Cfrom < Cto)
+        if (RowFrom > RowTo && ColFrom < ColTo)
             return true;
-        if (Rfrom < Rto && Cfrom < Cto)
+        if (RowFrom < RowTo && ColFrom < ColTo)
             return true;
-        return Rfrom < Rto && Cfrom > Cto;
+        return RowFrom < RowTo && ColFrom > ColTo;
 
     }
 

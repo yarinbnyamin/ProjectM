@@ -1,7 +1,5 @@
 package algorithms.search;
 
-import algorithms.mazeGenerators.Position;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -23,7 +21,7 @@ public class Solution implements Serializable {
 
     @Serial
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        solPath = (ArrayList) stream.readObject();
+        solPath = (ArrayList<AState>) stream.readObject();
     }
 
     public String toString() {

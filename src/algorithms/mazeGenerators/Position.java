@@ -13,7 +13,7 @@ public class Position implements Serializable {
 
     @Serial
     private void writeObject(ObjectOutputStream stream) throws IOException {
-
+        // 2 dimensions to byte array
         byte[] b = new byte[4];
         b[0] = (byte)(row / 256);
         b[0] = (byte)(row % 256);

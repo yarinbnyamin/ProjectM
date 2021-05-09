@@ -39,7 +39,12 @@ public class Maze implements Serializable {
         return c >= 0 && c < columns && r >= 0 && r < rows;
     }
 
+    /**
+     * transform the maze into byte array
+     * @return byte array that represent the maze
+     */
     public byte[] toByteArray() {
+        //first 12 positions are the demotions and property of the maze
         byte[] byteMazeInfo = new byte[12 + rows * columns];
         byteMazeInfo[0] = (byte)(this.rows / 256);
         byteMazeInfo[1] = (byte) (this.rows % 256);
@@ -53,6 +58,8 @@ public class Maze implements Serializable {
         byteMazeInfo[9] = (byte)(this.end_position.getRowIndex() % 256);
         byteMazeInfo[10] = (byte)(this.end_position.getColumnIndex() / 256);
         byteMazeInfo[11] = (byte)(this.end_position.getColumnIndex() % 256);
+
+        //the rest of the maze
         int counter = 12;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -74,7 +81,12 @@ public class Maze implements Serializable {
         byteToMaze(info);
     }
 
+    /**
+     * this function get and byte array and "extract" the maze from it
+     * @param info the byte array we want to get the maze from
+     */
     private void byteToMaze(byte[] info){
+        //first 12 positions are the demotions and property of the maze
         this.rows = info[0]*256 + (info[1] & 0xFF);
         this.columns = info[2]*256 + (info[3] & 0xFF);
         this.maze = new int[rows][columns];
@@ -82,6 +94,7 @@ public class Maze implements Serializable {
         Position GoalPos = new Position(info[8] * 256 + (info[9] & 0xFF), info[10] * 256 + (info[11] & 0xFF));
         setStartPosition(startPos);
         setGoalPosition(GoalPos);
+        //get the rest of the maze
         int CurrentCell = 12;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {

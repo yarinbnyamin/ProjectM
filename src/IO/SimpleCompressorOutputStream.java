@@ -14,31 +14,32 @@ public class SimpleCompressorOutputStream extends MyCompressorOutputStream {
         out.write(b);
     }
 
-
     @Override
     public void write(byte[] b) throws IOException {
 
+        //first 12 positions are the demotions and property of the maze
         for (int i = 0; i < 12; i++)
             write(Byte.toUnsignedInt(b[i]));
 
-        byte lastNum = 0;
-        int sum = 0;
+        //the rest of the maze
+        byte lastNum = 0; // we start with the number 0 to count
+        int count = 0; // how many times we saw the lastNum
         for (int i = 12; i < b.length; i++) {
-            if(lastNum == b[i]){
-                if(sum < 255) {
-                    sum++;
-                }else{
-                    write(sum);
+            if(lastNum == b[i]){ // if we saw the dame number again count it
+                if(count < 255) {
+                    count++;
+                }else{ // we need to store in another byte
+                    write(count);
                     write(0);
-                    sum = 1;
+                    count = 1;
                 }
-            }else{
-                write(sum);
-                sum = 1;
+            }else{ // we saw different number
+                write(count);
+                count = 1;
                 lastNum = b[i];
             }
         }
-        write(sum);
+        write(count); // write the last number count
 
     }
 }

@@ -18,24 +18,24 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-        // initialize a new fixed thread pool with 2 threads:
-        this.threadPool = Executors.newFixedThreadPool(2); // change
+        this.threadPool = Executors.newFixedThreadPool(3);
     }
 
     public void start(){
-        new Thread(() -> runServer()).start();
+        new Thread(this::runServer).start();
     }
 
+    /**
+     * the main function of the server
+     */
     private void runServer(){
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             serverSocket.setSoTimeout(listeningIntervalMS);
 
             while (!stop) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
-
-                    // Insert the new task into the thread pool:
+                try (Socket clientSocket = serverSocket.accept()){ // enter if we got connection
+                    // use the thread pool to "answer" the client
                     threadPool.submit(() -> handleClient(clientSocket));
 
                 } catch (SocketTimeoutException e){
@@ -43,8 +43,8 @@ public class Server {
                 }
             }
             serverSocket.close();
-            threadPool.shutdownNow(); // do not allow any new tasks into the thread pool, and also interrupts all running threads (do not terminate the threads, so if they do not handle interrupts properly, they could never stop...)
-        } catch (IOException e) {
+            threadPool.shutdownNow(); // close all connections
+            } catch (IOException e) {
             //
         }
     }
@@ -59,7 +59,6 @@ public class Server {
     }
 
     public void stop(){
-        //
         stop = true;
     }
 
