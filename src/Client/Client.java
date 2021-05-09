@@ -14,7 +14,9 @@ public class Client{
         this.serverPort = serverPort;
         this.strategy = strategy;
     }
-
+    /**
+     * the main function of the client communicate with a server
+     */
     public void communicateWithServer(){
         try(Socket serverSocket = new Socket(serverIP, serverPort)){
             strategy.clientStrategy(serverSocket.getInputStream(), serverSocket.getOutputStream());
