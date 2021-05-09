@@ -1,7 +1,6 @@
 package algorithms.search;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -31,20 +30,6 @@ public abstract class AState implements Comparable, Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AState aState = (AState) o;
         return Double.compare(aState.cost, cost) == 0 && Objects.equals(state, aState.state) && Objects.equals(cameFrom, aState.cameFrom);
-    }
-
-    @Serial
-    private void writeObject(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(state);
-        stream.writeObject(cost);
-        stream.writeObject(cameFrom);
-    }
-
-    @Serial
-    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        state = (String) stream.readObject();
-        cost = (double) stream.readObject();
-        cameFrom = (AState) stream.readObject();
     }
 
     @Override

@@ -3,6 +3,10 @@ package algorithms.search;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class MazeState extends AState{
@@ -76,6 +80,18 @@ public class MazeState extends AState{
         return Rfrom < Rto && Cfrom > Cto;
 
     }
+
+
+    @Serial
+    private void writeObject(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(pos);
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        pos = (Position) stream.readObject();
+    }
+
 
     public Maze getMaze() {
         return maze;

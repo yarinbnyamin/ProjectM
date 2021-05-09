@@ -13,14 +13,21 @@ public class Position implements Serializable {
 
     @Serial
     private void writeObject(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(row);
-        stream.writeObject(column);
+
+        byte[] b = new byte[4];
+        b[0] = (byte)(row / 256);
+        b[0] = (byte)(row % 256);
+        b[0] = (byte)(column / 256);
+        b[0] = (byte)(column % 256);
+        stream.writeObject(b);
+
     }
 
     @Serial
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        row = (int) stream.readObject();
-        column = (int) stream.readObject();
+        byte[] b = (byte[])stream.readObject();
+        row = b[0]*256 + (b[1] & 0xFF);
+        column = b[2]*256 + (b[3] & 0xFF);
     }
 
     @Override
