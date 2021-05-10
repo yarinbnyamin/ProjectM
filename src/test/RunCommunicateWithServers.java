@@ -11,6 +11,7 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.AState;
 import algorithms.search.Solution;
+import Server.Configurations;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -27,11 +28,7 @@ public class RunCommunicateWithServers {
         mazeGeneratingServer.start();
         solveSearchProblemServer.start();
 //Communicating with servers
-        //CommunicateWithServer_MazeGenerating();
-        CommunicateWithServer_SolveSearchProblem();
-        CommunicateWithServer_SolveSearchProblem();
-        CommunicateWithServer_SolveSearchProblem();
-        CommunicateWithServer_SolveSearchProblem();
+        CommunicateWithServer_MazeGenerating();
         CommunicateWithServer_SolveSearchProblem();
 //Stopping all servers
     mazeGeneratingServer.stop();
@@ -51,7 +48,7 @@ public class RunCommunicateWithServers {
                                 toServer.flush();
                                 byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                                 InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                                byte[] decompressedMaze = new byte[300 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                                byte[] decompressedMaze = new byte[2512 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                                 is.read(decompressedMaze); //Fill decompressedMaze
                                 Maze maze = new Maze(decompressedMaze); maze.print();
                             } catch (Exception e) { e.printStackTrace();
@@ -71,19 +68,10 @@ public class RunCommunicateWithServers {
                                 ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                                 ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                                 toServer.flush();
-                                EmptyMazeGenerator mg = new EmptyMazeGenerator(); Maze maze = mg.generate(50, 50); maze.print();
-
-
-                                long start = System.nanoTime();
-
-
+                                MyMazeGenerator mg = new MyMazeGenerator(); Maze maze = mg.generate(2, 2); maze.print();
                                 toServer.writeObject(maze); //send maze to server
                                 toServer.flush();
                                 Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
-
-
-                                long elapsedTime = System.nanoTime() - start;
-                                System.out.println(elapsedTime);
 
 //Print Maze Solution retrieved from the server
                                 System.out.println(String.format("Solution steps:%s", mazeSolution));

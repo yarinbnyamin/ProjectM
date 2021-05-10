@@ -26,6 +26,7 @@ public class Position implements Serializable {
     @Serial
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         byte[] b = (byte[])stream.readObject();
+        // we add the size and the secondary offset
         row = b[0]*256 + (b[1] & 0xFF);
         column = b[2]*256 + (b[3] & 0xFF);
     }

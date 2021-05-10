@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
-    static int index = 0; // number of the saved files
+    static volatile int index; // number of the saved files
     String tempDirectoryPath = System.getProperty("java.io.tmpdir");
 
     @Override
@@ -51,7 +51,9 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
             if(!eq){ // if we didn't found a maze like that in our data base
 
                 // find solution
-                ISearchingAlgorithm searchingAlgorithm = new BestFirstSearch();
+
+                Configurations conf = Configurations.getInstance();
+                ISearchingAlgorithm searchingAlgorithm = conf.getMazeSearchingAlgorithm();
                 ISearchable searchableMaze = new SearchableMaze(maze);
                 sol = searchingAlgorithm.solve(searchableMaze);
 

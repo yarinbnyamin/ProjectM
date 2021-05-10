@@ -24,10 +24,6 @@ public class Solution implements Serializable {
         solPath = (ArrayList<AState>) stream.readObject();
     }
 
-    public String toString() {
-        return solPath.toString();
-    }
-
     public void setSolPath(ArrayList<AState> solPath) {
         this.solPath = solPath;
     }

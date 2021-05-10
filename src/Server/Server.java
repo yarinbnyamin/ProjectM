@@ -1,6 +1,6 @@
 package Server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -18,7 +18,8 @@ public class Server {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-        this.threadPool = Executors.newFixedThreadPool(3);
+        Configurations conf = Configurations.getInstance();
+        this.threadPool = Executors.newFixedThreadPool(conf.getThreadPoolSize());
     }
 
     public void start(){
@@ -33,19 +34,43 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port);
             serverSocket.setSoTimeout(listeningIntervalMS);
 
+            // reload the last index of maze saved that was in the last time we run this program
+            try {
+            FileInputStream fi = new FileInputStream(System.getProperty("java.io.tmpdir") + "\\savedIndex.txt");
+            ObjectInputStream in = new ObjectInputStream(fi);
+            ServerStrategySolveSearchProblem.index = (int)in.readObject();
+            } catch (FileNotFoundException f) {
+                // if it's the first time we use this program start with index 0
+                ServerStrategySolveSearchProblem.index = 0;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
             while (!stop) {
-                try (Socket clientSocket = serverSocket.accept()){ // enter if we got connection
+                try{
+                    // enter if we got connection
+                    Socket clientSocket = serverSocket.accept();
                     // use the thread pool to "answer" the client
                     threadPool.submit(() -> handleClient(clientSocket));
 
                 } catch (SocketTimeoutException e){
-                    //
+                    // add a logger - in part c
                 }
             }
+
             serverSocket.close();
-            threadPool.shutdownNow(); // close all connections
+            threadPool.shutdown();
+
+            // create a file that save the last index of maze save
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\savedIndex.txt");
+            ObjectOutputStream o = new ObjectOutputStream(fileOut);
+            o.writeObject(ServerStrategySolveSearchProblem.index);
+            o.flush();
+            o.close();
+
             } catch (IOException e) {
-            //
+            // add a logger - in part c
         }
     }
 
@@ -54,7 +79,7 @@ public class Server {
             strategy.ServerStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
             clientSocket.close();
         } catch (IOException e){
-            //
+            // add a logger - in part c
         }
     }
 

@@ -45,6 +45,7 @@ public class Maze implements Serializable {
      */
     public byte[] toByteArray() {
         //first 12 positions are the demotions and property of the maze
+        // we save 2 byte size - the offset of the byte size saved as a secondary mod
         byte[] byteMazeInfo = new byte[12 + rows * columns];
         byteMazeInfo[0] = (byte)(this.rows / 256);
         byteMazeInfo[1] = (byte) (this.rows % 256);
@@ -87,6 +88,7 @@ public class Maze implements Serializable {
      */
     private void byteToMaze(byte[] info){
         //first 12 positions are the demotions and property of the maze
+        // we add the size and the secondary offset
         this.rows = info[0]*256 + (info[1] & 0xFF);
         this.columns = info[2]*256 + (info[3] & 0xFF);
         this.maze = new int[rows][columns];
@@ -94,6 +96,7 @@ public class Maze implements Serializable {
         Position GoalPos = new Position(info[8] * 256 + (info[9] & 0xFF), info[10] * 256 + (info[11] & 0xFF));
         setStartPosition(startPos);
         setGoalPosition(GoalPos);
+
         //get the rest of the maze
         int CurrentCell = 12;
         for (int row = 0; row < rows; row++) {

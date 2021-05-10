@@ -1,42 +1,76 @@
 package Server;
 
+import algorithms.mazeGenerators.AMazeGenerator;
+import algorithms.mazeGenerators.EmptyMazeGenerator;
+import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
+import algorithms.search.ASearchingAlgorithm;
+import algorithms.search.BestFirstSearch;
+import algorithms.search.BreadthFirstSearch;
+import algorithms.search.DepthFirstSearch;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Configurations {
 
-    private static Properties prop;
+    private static Configurations conf = null;
+    private Properties prop;
 
-    public Configurations() {
-        singlton();
-    }
-
-    private Properties singlton(){
-        if(prop == null)
+    private Configurations() {
+        try {
+            InputStream input = new FileInputStream("resources/config.properties");
             prop = new Properties();
-        return prop;
+            prop.load(input);
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
-    public static int getThreadPoolSize(){
+    public static Configurations getInstance(){ //singleton
+        if(conf == null)
+            conf = new Configurations();
+        return conf;
+    }
+
+    public int getThreadPoolSize(){
         return Integer.parseInt(prop.getProperty("threadPoolSize"));
     }
 
-    public static void setThreadPoolSize(int size){
+    public void setThreadPoolSize(int size){
         prop.setProperty("threadPoolSize", String.valueOf(size));
     }
 
-    public static String getMazeGeneratingAlgorithm(){
-        return prop.getProperty("mazeGeneratingAlgorithm");
+    public AMazeGenerator getMazeGeneratingAlgorithm(){
+        String algo = prop.getProperty("mazeGeneratingAlgorithm");
+        switch(algo) {
+            case "EmptyMazeGenerator":
+                return new EmptyMazeGenerator();
+            case "SimpleMazeGenerator":
+                return new SimpleMazeGenerator();
+        }
+        return new MyMazeGenerator();
     }
 
-    public static void setMazeGeneratingAlgorithm(String st){
+    public void setMazeGeneratingAlgorithm(String st){
         prop.setProperty("mazeGeneratingAlgorithm", st);
     }
 
-    public static String getMazeSearchingAlgorithm(){
-        return prop.getProperty("mazeSearchingAlgorithm");
+    public ASearchingAlgorithm getMazeSearchingAlgorithm(){
+        String algo = prop.getProperty("mazeSearchingAlgorithm");
+        switch(algo) {
+            case "BreadthFirstSearch":
+                return new BreadthFirstSearch();
+            case "DepthFirstSearch":
+                return new DepthFirstSearch();
+        }
+        return new BestFirstSearch();
     }
 
-    public static void setMazeSearchingAlgorithm(String st){
+    public void setMazeSearchingAlgorithm(String st){
         prop.setProperty("mazeSearchingAlgorithm", st);
     }
 
